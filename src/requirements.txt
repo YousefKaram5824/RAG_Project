@@ -1,0 +1,40 @@
+# =============================================================================
+# requirements.txt — Python Dependencies
+# =============================================================================
+# Install with:
+#   pip install -r requirements.txt
+#
+# Each section explains WHY the package is needed.
+# =============================================================================
+
+# --- Web framework ---
+fastapi[standard]==0.110.2      # The API framework. [standard] includes uvicorn + extras
+uvicorn[standard]==0.29.0       # ASGI server that runs FastAPI
+python-multipart==0.0.9         # Required for file upload (multipart/form-data)
+
+# --- Config & validation ---
+pydantic-settings==2.2.1        # Loads .env into typed Settings class (helpers/config.py)
+
+# --- File I/O ---
+aiofiles==23.2.1                # Async file writing used in the upload endpoint
+
+# --- Document parsing & chunking ---
+langchain==0.1.20               # Provides RecursiveCharacterTextSplitter for chunking
+PyMuPDF==1.24.3                 # Extracts text from PDF files (PyMuPDFLoader)
+
+# --- Database ---
+motor==3.4.0                    # Async MongoDB driver (wraps PyMongo for asyncio)
+
+# --- LLM & Embeddings ---
+openai==1.35.15                 # OpenAI-compatible client (also works with Gemini, Ollama endpoints)
+sentence-transformers>=2.6.0    # Local embedding model: BAAI/bge-small-en
+
+# --- Vector Database ---
+qdrant-client==1.10.1           # Qdrant Python client (collections, upsert, search)
+
+# --- Arabic NLP (Bonus +10%) ---
+arabic-reshaper>=3.0.0          # Fixes Arabic ligature rendering extracted from PDFs
+python-bidi>=0.4.2              # Handles right-to-left (RTL) text direction
+
+# --- Frontend UI ---
+streamlit>=1.33.0               # Interactive web UI for the RAG pipeline (interface.py)
