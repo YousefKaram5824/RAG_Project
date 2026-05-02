@@ -1,0 +1,3 @@
+# Never commit real credentials or generated DB data
+.env
+mongodb/

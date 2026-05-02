@@ -1,0 +1,12 @@
+# Secrets
+.env
+
+# Runtime data (auto-created, large)
+assets/files/
+assets/db/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
