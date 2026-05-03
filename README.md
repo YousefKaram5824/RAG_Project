@@ -98,7 +98,7 @@ copy .env.example .env
 ```
 
 Open `src/.env` and fill in:
-- `OPENAI_API_KEY` — your OpenAI key (or Ollama if running locally)
+- `GROQ_API_KEY` — your GROQ api key
 - Leave everything else as default for now
 
 ---
@@ -227,3 +227,27 @@ First run downloads BAAI/bge-small-en (~130MB). Subsequent runs use the cache at
 
 **Qdrant connection error:**
 Verify the container is running: `docker ps | findstr qdrant`
+
+
+## Setting up the Groq API (IMPORTANT !!)
+
+Each team member must generate their own API key for local development. Follow these steps to configure your environment:
+
+### Step 1: Generate Your Groq API Key
+1. Navigate to the [Groq Cloud Console](https://console.groq.com/keys).
+2. Create an account or log in using your existing credentials.
+3. On the left-hand navigation menu, select **API Keys**.
+4. Click the **Create API Key** button. 
+5. Give your key a recognizable name (e.g., `rag-project-dev`) and click **Submit**.
+6. **Copy the generated key immediately.** (It will begin with `gsk_`). For security reasons, Groq will not display this full key again once you close the window.
+
+### Step 2: Configure Your `.env` File
+
+1. Locate the `.env` file in your `src/` directory (create one by copying `.env.example` if you haven't already).
+2. Paste your copied API key. Update your variables to match this block exactly:
+```env
+GROQ_API_KEY="gsk_YOUR_COPIED_KEY_HERE"
+GROQ_API_BASE="[https://api.groq.com/openai/v1](https://api.groq.com/openai/v1)"
+GENERATE_RESPONSE_MODEL="llama-3.1-8b-instant"
+ALT_GENERATE_RESPONSE_MODEL="llama3-70b-8192"
+```
