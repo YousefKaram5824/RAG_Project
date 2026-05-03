@@ -20,16 +20,21 @@
 
 import aiofiles
 import os
+import logging
+from fastapi.responses import JSONResponse
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status
 from helpers.config import Settings, get_settings
 from controllers.DataController import DataController
 from controllers.FileController import FileController
 from controllers.ProcessController import ProcessController
+from controllers.ProjectController import ProjectController
 from models.ProjectModel import ProjectModel
 from models.ChunkModel import ChunkModel
 from routes.schema.data import RequestProcess
 from models import ResponseSignal
+from helpers import utilities
 
+logger = logging.getLogger('uvicorn.error')
 data_router = APIRouter(prefix="/api/data", tags=["data"])
 
 
@@ -53,6 +58,8 @@ async def upload_file(
     """
     # TODO: implement upload endpoint body
     data_controller = DataController()
+    project_controller = ProjectController()
+
     is_valid, signal = data_controller.validate_file(file)
     if not is_valid:
         if signal == ResponseSignal.FILE_TYPE_NOT_SUPPORTED:
@@ -66,6 +73,30 @@ async def upload_file(
                 detail=f"File size exceeds the maximum allowed size of {settings.FILE_MAX_SIZE_MB} MB."
             )
 
+    project_dir_path = project_controller.get_project_path(project_id=dir_name)
+    file_path, file_id = utilities.generate_unique_filepath(
+        orig_file_name=file.filename,
+        project_id=dir_name
+    )
+
+    try:
+        async with aiofiles.open(file_path, "wb") as f:
+            while chunk := await file.read(settings.FILE_CHUNK_SIZE):
+                await f.write(chunk)
+    except Exception as e:
+        logger.error(f"Error while uploading file: {e}")
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "signal": ResponseSignal.FILE_UPLOAD_FAILED.value
+            }
+        )
+
+    return {
+        "signal": ResponseSignal.FILE_UPLOAD_SUCCESS.value,
+        "message": "File uploaded successfully",
+        "file_id": file_id
+    }
 
 
 @data_router.post("/process/{project_id}")
