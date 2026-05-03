@@ -5,7 +5,7 @@ class BaseController:
 
     def __init__(self, app_settings: Settings = None):
 
-        self.app_settings = app_settings # or get_settings()
+        self.app_settings = app_settings or get_settings()
 
         self.base_dir = os.path.dirname(
             os.path.dirname(os.path.abspath(__file__))
