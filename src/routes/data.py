@@ -20,15 +20,21 @@
 
 import aiofiles
 import os
-from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
+import logging
+from fastapi.responses import JSONResponse
+from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status
 from helpers.config import Settings, get_settings
 from controllers.DataController import DataController
 from controllers.FileController import FileController
 from controllers.ProcessController import ProcessController
+from controllers.ProjectController import ProjectController
 from models.ProjectModel import ProjectModel
 from models.ChunkModel import ChunkModel
 from routes.schema.data import RequestProcess
+from models import ResponseSignal
+from helpers import utilities
 
+logger = logging.getLogger('uvicorn.error')
 data_router = APIRouter(prefix="/api/data", tags=["data"])
 
 
@@ -39,18 +45,8 @@ async def upload_file(
     settings: Settings = Depends(get_settings)
 ):
     """
-    Step 1: Uploads a document and creates a project record.
-
-    Args (path):
-        dir_name: The project name/slug (alphanumeric only)
-    Args (form):
-        file: The document to upload (.pdf or .txt)
-
-    Returns:
-        {"message": "...", "project_id": "<mongo_object_id>"}
-
     Flow:
-        1. Validate file MIME type and size via DataController
+        1. Validate file MIME type and size via DataController ✅
         2. Get/create the project in MongoDB via ProjectModel
         3. Resolve the save path via FileController
         4. Stream-write the file to disk using aiofiles
@@ -61,7 +57,46 @@ async def upload_file(
         Use aiofiles.open(file_path, "wb") and await file.read() in chunks.
     """
     # TODO: implement upload endpoint body
-    pass
+    data_controller = DataController()
+    project_controller = ProjectController()
+
+    is_valid, signal = data_controller.validate_file(file)
+    if not is_valid:
+        if signal == ResponseSignal.FILE_TYPE_NOT_SUPPORTED:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"File type '{file.content_type}' is not allowed. Accepted types: {settings.FILE_ALLOWED_EXTENSIONS}"
+            )
+        elif signal == ResponseSignal.FILE_SIZE_EXCEEDED:
+            raise HTTPException(
+                status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                detail=f"File size exceeds the maximum allowed size of {settings.FILE_MAX_SIZE_MB} MB."
+            )
+
+    project_dir_path = project_controller.get_project_path(project_id=dir_name)
+    file_path, file_id = utilities.generate_unique_filepath(
+        orig_file_name=file.filename,
+        project_id=dir_name
+    )
+
+    try:
+        async with aiofiles.open(file_path, "wb") as f:
+            while chunk := await file.read(settings.FILE_CHUNK_SIZE):
+                await f.write(chunk)
+    except Exception as e:
+        logger.error(f"Error while uploading file: {e}")
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "signal": ResponseSignal.FILE_UPLOAD_FAILED.value
+            }
+        )
+
+    return {
+        "signal": ResponseSignal.FILE_UPLOAD_SUCCESS.value,
+        "message": "File uploaded successfully",
+        "file_id": file_id
+    }
 
 
 @data_router.post("/process/{project_id}")
