@@ -4,7 +4,8 @@
 
 from sentence_transformers import SentenceTransformer
 from stores.llm.LLMInterface import EmbeddingInterface
-from typing import List
+import logging
+from typing import List, Optional
 
 class EmbeddingProvider(EmbeddingInterface):
 
@@ -16,6 +17,7 @@ class EmbeddingProvider(EmbeddingInterface):
     def __init__(self) -> None:
         self.model: SentenceTransformer | None = None
         self.embedding_size: int | None = None
+        self.logger = logging.getLogger(__name__)
 
         # TODO: Embedding Cache
         #   self._cache: Dict[str, List[float]] = {}
@@ -34,18 +36,19 @@ class EmbeddingProvider(EmbeddingInterface):
         self.model = SentenceTransformer(model_name)
         self.embedding_size = embedding_size
 
-    def embed_text(self, text: str, doc_type: str = "passage") -> List[float]:
+    def embed_text(self, text: str, doc_type: str = "passage"):
         if self.model is None:
-            raise RuntimeError(
-                "Embedding model not loaded. Call set_embedding_model() first."
-            )
+            self.logger.error("Embedding model not loaded. Call set_embedding_model() first.")
+            return None
 
         if doc_type not in self._PREFIX_MAP:
-            raise ValueError(
-                f"Invalid doc_type '{doc_type}'. "
-                f"Must be one of {list(self._PREFIX_MAP.keys())}."
-            )
+            self.logger.error(f"Invalid doc_type '{doc_type}'. Must be one of {list(self._PREFIX_MAP.keys())}.")
+            return None
 
-        prefixed_text = self._PREFIX_MAP[doc_type] + text
-        vector = self.model.encode(prefixed_text)
-        return vector.tolist()
+        try:
+            prefixed_text = self._PREFIX_MAP[doc_type] + text
+            vector = self.model.encode(prefixed_text)
+            return vector.tolist()
+        except Exception as e:
+            self.logger.error(f"Error while embedding text: {str(e)}")
+            return None
