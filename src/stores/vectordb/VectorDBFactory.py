@@ -1,50 +1,32 @@
-# =============================================================================
-# stores/vectordb/VectorDBFactory.py — Vector DB Provider Factory
-# =============================================================================
-# PURPOSE:
-#   Factory Method Pattern for vector database providers.
-#   Currently only supports Qdrant, but structured for easy extension.
-#
-# CALLED BY: main.py at app startup
-# TEAM NOTE (Ahmed — Phase 3):
-#   Call this from main.py:
-#     vector_db = VectorDBFactory.create("qdrant", settings)
-# =============================================================================
-
+import logging
 from helpers.config import Settings
 from controllers.BaseController import BaseController
+from models.enums.VectorDBEnum import VectorDBProvider
+from stores.vectordb.VectorDBInterface import VectorDBInterface
 
+logger = logging.getLogger(__name__)
 
 class VectorDBFactory:
-    """
-    Creates vector database provider instances by name.
-    """
 
     @staticmethod
-    def create(provider_type: str, settings: Settings):
-        """
-        Factory method — returns the appropriate VectorDB provider.
-
-        Args:
-            provider_type: One of:
-                           "qdrant" → QDrantDB (local or remote)
-                           # Future: "faiss", "pinecone", "weaviate"
-            settings: App settings for connection config
-
-        Returns:
-            An instance implementing VectorDBInterface
-
-        TODO (Ahmed):
+    def create(
+        provider_type: VectorDBProvider,
+        settings: Settings,
+    ) -> VectorDBInterface:
+        # lazy imports to avoid circular deps
+        if provider_type == VectorDBProvider.QDRANT:
             from stores.vectordb.provider.QDrantDB import QDrantDB
 
-            if provider_type == "qdrant":
-                base = BaseController()
-                db_path = base.get_db_path()
-                client = QDrantDB(path=db_path)
-                client.connect()
-                return client
-            else:
-                raise ValueError(f"Unknown vector DB provider: '{provider_type}'")
-        """
-        # TODO: implement factory method
-        pass
+            base = BaseController(app_settings=settings)
+            db_path = base.get_db_path()
+
+            client = QDrantDB(path=db_path)
+            client.connect()
+
+            logger.info("QDrantDB provider created (local path: %s)", db_path)
+            return client
+
+        raise ValueError(
+            f"Unknown vector DB provider: '{provider_type}'. "
+            f"Available: {[p.value for p in VectorDBProvider]}"
+        )
