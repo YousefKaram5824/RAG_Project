@@ -52,35 +52,29 @@ class NlpController(BaseController):
         chunks: list,
         do_reset: bool = False
     ) -> dict:
-        """
-        Embeds all chunks from MongoDB and pushes their vectors to Qdrant.
+        if do_reset:
+            await self.vector_db.delete_collection(collection_name=project_id)
+    
+        texts = [chunk.content for chunk in chunks]
+    
+        embeddings = self.embedding_provider.generate_embeddings(texts)
+    
+        points = []
+        for i, chunk in enumerate(chunks):
+            points.append({
+                "id": chunk.id, 
+                "vector": embeddings[i],
+                "payload": {
+                "   project_id": project_id, 
+                    "text": chunk.content,
+                    "metadata": chunk.metadata  # Keeping the 'Dirty Hands' metadata!
+                }
+            })
+    
+        await self.vector_db.upsert(collection_name=project_id, points=points)
+    
+        return {"message": f"Successfully pushed {len(chunks)} chunks to index."}
 
-        Pipeline:
-          chunks (from MongoDB) → embed each chunk text → collect vectors
-          → create Qdrant collection → batch upsert all vectors
-
-        Args:
-            project_id: Used as the Qdrant collection name prefix
-            chunks:     List of DataChunk objects from ChunkModel
-            do_reset:   If True, delete the existing collection first
-
-        Returns:
-            {"message": "Successfully pushed N chunks to index."}
-
-        TODO (Ahmed — Phase 3):
-            1. If do_reset → call self.vector_db.delete_collection(project_id)
-            2. Create collection: self.vector_db.create_collection(
-                   project_id,
-                   self.app_settings.EMBEDDING_DIMENSION,
-                   self.app_settings.VECTOR_DISTANCE_METRIC
-               )
-            3. For each chunk in chunks:
-                   vector = self.embed_client.embed(chunk.chunk_text, "passage")
-            4. Batch upsert: self.vector_db.add_documents(project_id, vectors, chunks)
-            5. Return success message with count
-        """
-        # TODO: implement vector push pipeline
-        pass
 
     async def search_by_vector(
         self,
@@ -88,28 +82,25 @@ class NlpController(BaseController):
         query_text: str,
         top_k: int = 5
     ) -> list:
-        """
-        Embeds the query and performs semantic similarity search in Qdrant.
+        query_vector = self.embedding_provider.generate_embeddings([query_text], input_type="query")[0]
 
-        Pipeline:
-          query_text → embed (with "query" prefix) → search Qdrant → return top-k results
+    
+        raw_results = await self.vector_db.search(
+            collection_name=project_id,
+            query_vector=query_vector,
+            limit=top_k
+        )
 
-        Args:
-            project_id: Qdrant collection to search in
-            query_text: The user's raw question string
-            top_k:      Number of results to retrieve
+        formatted_results = []
+        for hit in raw_results:
+            formatted_results.append({
+                "text": hit.payload.get("text", ""),    
+                "score": hit.score,                      
+                "metadata": hit.payload.get("metadata", {}) 
+            })
 
-        Returns:
-            List of RetrievalDocument objects [{text, score}, ...]
-
-        TODO (Ahmed — Phase 3):
-            1. query_vector = self.embed_client.embed(query_text, "query")
-            2. results = self.vector_db.search_by_vector(project_id, query_vector, top_k)
-            3. Return results list
-        """
-        # TODO: implement semantic search
-        pass
-
+        return formatted_results
+        
     async def answer_rag_question(
         self,
         project_id: str,
@@ -117,6 +108,42 @@ class NlpController(BaseController):
         top_k: int = 5,
         language: str = "en"
     ) -> dict:
+        async def answer_rag_question(
+    self,
+    project_id: str,
+    question: str,
+    top_k: int = 5,
+    language: str = "en"
+) -> dict:
+        # 1. RETRIEVAL: Get the top-k relevant chunks from Qdrant
+        # This uses the method we just built!
+            relevant_chunks = await self.search_by_vector(project_id, question, top_k)
+
+        # 2. TEMPLATE LOADING: Get the prompt structure based on language
+        # 'en' or 'ar' determines the tone and instructions for the AI
+            system_template = self.template_parser.get("system_prompt", language)
+            footer_template = self.template_parser.get("footer_prompt", language)
+
+            # 3. PROMPT BUILDING: Inject retrieved chunks into the template
+            # We combine the retrieved text and the user's question into one big string
+            full_prompt = self.template_parser.build_prompt(
+                question=question,
+                chunks=relevant_chunks,
+                system_template=system_template,
+                footer_template=footer_template
+            )
+
+            # 4. GENERATION: Call the LLM with the grounded prompt
+            # We send this as a message array to the OpenAI-compatible client
+            messages = [{"role": "user", "content": full_prompt}]
+            answer = await self.llm_client.generate(messages)
+
+            # 5. RETURN: Wrap everything in the expected dictionary
+            return {
+                "answer": answer,
+                "full_prompt": full_prompt,  # Useful for debugging what the AI actually "saw"
+                "chat_history": messages      # Maintains the record of the interaction
+            }
         """
         Full RAG pipeline: retrieve relevant chunks, build a grounded prompt,
         call the LLM, and return the generated answer.
