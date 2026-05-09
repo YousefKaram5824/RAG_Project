@@ -82,6 +82,7 @@ class NlpController(BaseController):
         query_text: str,
         top_k: int = 5
     ) -> list:
+        # TODO: Revise this
         query_vector = self.embedding_provider.generate_embeddings([query_text], input_type="query")[0]
 
     
@@ -108,24 +109,15 @@ class NlpController(BaseController):
         top_k: int = 5,
         language: str = "en"
     ) -> dict:
-        async def answer_rag_question(
-    self,
-    project_id: str,
-    question: str,
-    top_k: int = 5,
-    language: str = "en"
-) -> dict:
-        # 1. RETRIEVAL: Get the top-k relevant chunks from Qdrant
-        # This uses the method we just built!
+
+        
             relevant_chunks = await self.search_by_vector(project_id, question, top_k)
 
-        # 2. TEMPLATE LOADING: Get the prompt structure based on language
-        # 'en' or 'ar' determines the tone and instructions for the AI
+        
             system_template = self.template_parser.get("system_prompt", language)
             footer_template = self.template_parser.get("footer_prompt", language)
 
-            # 3. PROMPT BUILDING: Inject retrieved chunks into the template
-            # We combine the retrieved text and the user's question into one big string
+            
             full_prompt = self.template_parser.build_prompt(
                 question=question,
                 chunks=relevant_chunks,
@@ -133,18 +125,16 @@ class NlpController(BaseController):
                 footer_template=footer_template
             )
 
-            # 4. GENERATION: Call the LLM with the grounded prompt
-            # We send this as a message array to the OpenAI-compatible client
+            
             messages = [{"role": "user", "content": full_prompt}]
             answer = await self.llm_client.generate(messages)
 
-            # 5. RETURN: Wrap everything in the expected dictionary
             return {
                 "answer": answer,
-                "full_prompt": full_prompt,  # Useful for debugging what the AI actually "saw"
-                "chat_history": messages      # Maintains the record of the interaction
+                "full_prompt": full_prompt,  
+                "chat_history": messages      
             }
-        """
+    """
         Full RAG pipeline: retrieve relevant chunks, build a grounded prompt,
         call the LLM, and return the generated answer.
 
@@ -182,7 +172,7 @@ class NlpController(BaseController):
             9. Return {answer, full_prompt, chat_history}
         """
         # TODO: implement full RAG answer pipeline
-        pass
+    # pass
 
     async def get_project_info(self, project_id: str) -> bool:
         """
