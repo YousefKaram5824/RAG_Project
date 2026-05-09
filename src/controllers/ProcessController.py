@@ -34,6 +34,12 @@ import os
 from typing import List
 from controllers.BaseController import BaseController
 from controllers.FileController import FileController
+from langchain_community.document_loaders import PyMuPDFLoader, TextLoader
+import os
+import arabic_reshaper
+from bidi.algorithm import get_display
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langdetect import detect
 
 
 class ProcessController(BaseController):
@@ -42,89 +48,84 @@ class ProcessController(BaseController):
     """
 
     def __init__(self):
-        super().__init__()
+        super().__init__()  
         self.file_controller = FileController()
-
+###########################
+# uosef wrote this function
+###########################
     def get_file_content(self, project_id: str, filename: str):
-        """
-        Loads raw file content using the appropriate LangChain loader.
-        Supports: .pdf (PyMuPDFLoader) and .txt (TextLoader)
 
-        Args:
-            project_id: The project folder name
-            filename:   The file to load (e.g. "resume.pdf")
+        file_path = self.file_controller.get_file_path(project_id, filename)
 
-        Returns:
-            List of LangChain Document objects (each has .page_content + .metadata)
+        if filename.endswith(".pdf"):
+            docs = PyMuPDFLoader(file_path).load()
 
-        TODO (Pair A):
-            1. Get the file path from self.file_controller.get_file_path(...)
-            2. Check the file extension
-            3. For .pdf  → use PyMuPDFLoader(file_path).load()
-            4. For .txt  → use TextLoader(file_path, encoding="utf-8").load()
-            5. If Arabic content is detected → apply preprocess_arabic() first
-            6. Return the list of Document objects
-        """
-        # TODO: implement file loading
-        pass
+        elif filename.endswith(".txt"):
+            docs = TextLoader(file_path, encoding="utf-8").load()
 
+        else:
+            raise ValueError("Unsupported file type")
+
+        return docs
+###########################
+# uosef wrote this function
+###########################
     def preprocess_arabic(self, text: str) -> str:
-        """
-        Fixes Arabic text extracted from PDFs so it chunks correctly.
-
-        Arabic in PDFs is often stored in visual order (right-to-left characters
-        reversed) with broken ligatures. Two libraries fix this:
-          - arabic_reshaper: reconnects Arabic letter forms (ligatures)
-          - bidi.algorithm: restores the correct RTL reading order
-
-        Args:
-            text: Raw Arabic text string from PyMuPDF
-
-        Returns:
-            Properly ordered and reshaped Arabic text, ready for chunking
-
-        TODO (Pair A — Member 3, Arabic Bonus):
-            import arabic_reshaper
-            from bidi.algorithm import get_display
+        try:
             reshaped = arabic_reshaper.reshape(text)
-            return get_display(reshaped)
-        """
-        # TODO: implement Arabic preprocessing
-        pass
+            return reshaped  # ← شيل get_display
+        except Exception as e:
+            print(f"⚠️ Arabic preprocessing failed: {e}")
+            return text
+    
+    def is_arabic(self, text: str) -> bool:
+        arabic_chars = sum(1 for c in text if '\u0600' <= c <= '\u06FF')
+        return arabic_chars > len(text) * 0.3
+###########################
+# uosef wrote this function
+###########################
 
     def process_files(
-        self,
-        project_id: str,
-        filename: str,
-        chunk_size: int = 500,
-        overlap: int = 50
-    ) -> List[dict]:
-        """
-        Main entry point. Loads the file and splits it into chunks.
+    self,
+    project_id: str,
+    filename: str,
+    chunk_size: int = 500,
+    overlap: int = 50
+) -> List[dict]:
 
-        Args:
-            project_id: Project folder name
-            filename:   File to process
-            chunk_size: Target chunk size in characters (default 500)
-            overlap:    Overlap between consecutive chunks in characters (default 50)
+        print("🔥 PROCESS STARTED")
+        print("📁 Project:", project_id)
+        print("📄 File:", filename)
 
-        Returns:
-            List of dicts, each dict has:
-              {
-                "chunk_text":     str,   # the text content
-                "chunk_metadata": dict,  # {"source": filename, "page": int, ...}
-                "chunk_order":    int    # sequential index (0, 1, 2, ...)
-              }
+        docs = self.get_file_content(project_id, filename)
 
-        TODO (Pair A):
-            1. Call self.get_file_content(project_id, filename)
-            2. Create RecursiveCharacterTextSplitter(
-                   chunk_size=chunk_size,
-                   chunk_overlap=overlap
-               )
-            3. Call splitter.split_documents(docs) to get chunks
-            4. Map each chunk to the dict format above
-            5. Return the list
-        """
-        # TODO: implement chunking pipeline
-        pass
+        print(f"📄 Docs loaded: {len(docs)}")
+
+        # optional Arabic preprocessing
+        # Arabic gate — only preprocess Arabic documents
+        for doc in docs:
+            if doc.page_content:
+                if self.is_arabic(doc.page_content):
+                    doc.page_content = self.preprocess_arabic(doc.page_content)
+
+        splitter = RecursiveCharacterTextSplitter(
+            chunk_size=chunk_size,
+            chunk_overlap=overlap
+        )
+
+        chunks = splitter.split_documents(docs)
+
+        print(f"✂️ Chunks created: {len(chunks)}")
+
+        result = []
+
+        for i, chunk in enumerate(chunks):
+            result.append({
+                "chunk_text": chunk.page_content,
+                "chunk_metadata": chunk.metadata,
+                "chunk_order": i
+            })
+
+        print("✅ PROCESS DONE")
+
+        return result

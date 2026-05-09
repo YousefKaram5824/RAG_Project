@@ -3,7 +3,8 @@
 
 from openai import OpenAI
 from stores.llm.LLMInterface import GenerationInterface
-
+from openai import OpenAI
+import httpx
 
 import logging
 from typing import List, Optional
@@ -23,10 +24,10 @@ class OpenAIProvider(GenerationInterface):
         self.generation_model: str | None = None
         self.logger = logging.getLogger(__name__)
 
-        self.client = OpenAI(
-            api_key=self.api_key,
-            base_url=self.api_url if self.api_url else None
-        )
+        client = OpenAI(
+          api_key=self.api_key,
+          http_client=httpx.Client()
+)
 
     def set_generation_model(self, model_name: str) -> None:
         self.generation_model = model_name

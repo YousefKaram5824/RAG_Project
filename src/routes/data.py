@@ -91,9 +91,10 @@ async def upload_file(
                 "signal": ResponseSignal.FILE_UPLOAD_FAILED.value
             }
         )
-
+    project_model = ProjectModel()
+    await project_model.get_project_or_create_one(project_id=dir_name)
     return {
-        "signal": ResponseSignal.FILE_UPLOAD_SUCCESS.value,
+        "signal": ResponseSignal.PROCESSING_SUCCESS.value,
         "message": "File uploaded successfully",
         "file_id": file_id
     }
@@ -127,5 +128,66 @@ async def process_file(
         Implement the body. Remember project_id in the URL is the MongoDB _id,
         but request.project_id is the filename inside the project folder.
     """
-    # TODO: implement process endpoint body
-    pass
+    # TODO: implement process endpoint body'
+    
+     # 1. Look up project in MongoDB
+    project_model = ProjectModel()
+    project = await project_model.get_project_or_create_one(project_id=project_id)
+
+    if not project:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Project not found"
+        )
+
+    # 2. If do_reset=1, delete existing chunks
+    chunk_model = ChunkModel()
+
+    if request.do_reset == 1:
+        await chunk_model.delete_chunks_by_project_id(project_id=project_id)
+
+    # 3. Process the file → get chunks list
+    process_controller = ProcessController()
+
+    try:
+        chunks = process_controller.process_files(
+            project_id=project_id,
+            filename=request.project_id,   # ← الفايل نيم جاي من body
+            chunk_size=request.chunk_size,
+            overlap=request.overlap
+        )
+    except Exception as e:
+        logger.error(f"Error processing file: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Failed to process file: {str(e)}"
+        )
+
+    # 4. Insert chunks into MongoDB
+    if chunks:
+        await chunk_model.insert_many_chunks(
+            project_id=project_id,
+            chunks=chunks
+        )
+
+    # 5. Return chunk count
+    return {
+        "signal": ResponseSignal.PROCESSING_SUCCESS.value,
+        "inserted_chunks": len(chunks)
+    }
+
+@data_router.get("/chunks/{project_id}")
+async def get_chunks(project_id: str):
+    chunk_model = ChunkModel()
+    chunks = await chunk_model.get_chunks_by_project_id(project_id=project_id)
+    return {
+        "project_id": project_id,
+        "chunks_count": len(chunks),
+        "chunks": [
+            {
+                "order": c.chunk_order,
+                "text": c.chunk_text
+            }
+            for c in chunks
+        ]
+    }
