@@ -55,19 +55,19 @@ class NlpController(BaseController):
         if do_reset:
             await self.vector_db.delete_collection(collection_name=project_id)
     
-        texts = [chunk.content for chunk in chunks]
+        texts = [chunk.chunk_text for chunk in chunks]
     
-        embeddings = self.embedding_provider.generate_embeddings(texts)
+        embeddings = self.embed_client.generate_embeddings(texts)
     
         points = []
         for i, chunk in enumerate(chunks):
             points.append({
-                "id": chunk.id, 
+                "id": chunk.id, # This might casue an issue
                 "vector": embeddings[i],
                 "payload": {
-                "   project_id": project_id, 
-                    "text": chunk.content,
-                    "metadata": chunk.metadata  # Keeping the 'Dirty Hands' metadata!
+                    "project_id": project_id, 
+                    "text": chunk.chunk_text,
+                    "metadata": chunk.chunk_metadata  
                 }
             })
     
@@ -82,8 +82,8 @@ class NlpController(BaseController):
         query_text: str,
         top_k: int = 5
     ) -> list:
-        # TODO: Revise this
-        query_vector = self.embedding_provider.generate_embeddings([query_text], input_type="query")[0]
+        
+        query_vector = self.embed_client.generate_embeddings([query_text], input_type="query")[0]
 
     
         raw_results = await self.vector_db.search(
@@ -93,11 +93,11 @@ class NlpController(BaseController):
         )
 
         formatted_results = []
-        for hit in raw_results:
+        for top in raw_results:
             formatted_results.append({
-                "text": hit.payload.get("text", ""),    
-                "score": hit.score,                      
-                "metadata": hit.payload.get("metadata", {}) 
+                "text": top.payload.get("text", ""),    
+                "score": top.score,                      
+                "metadata": top.payload.get("metadata", {}) 
             })
 
         return formatted_results
