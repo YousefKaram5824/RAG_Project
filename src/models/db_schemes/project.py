@@ -14,10 +14,11 @@ class Project(BaseModel):
     @field_validator("project_id")
     @classmethod
     def project_id_must_be_alphanumeric(cls, v):
+        import re
         v = v.strip().lower()
-        if not v.isalnum():
+        if not re.match(r'^[a-z0-9_-]+$', v):
             raise ValueError(
-                f"project_id must contain only letters and digits (a-z, 0-9). "
+                f"project_id must contain only letters, digits, hyphens, or underscores. "
                 f"Received: '{v}'"
             )
         return v

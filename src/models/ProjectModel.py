@@ -36,6 +36,12 @@ class ProjectModel(DataBaseModel):
         self.collection = self.get_collection(self.COLLECTION_NAME)
 
     async def create_project(self, project_id: str) -> Project:
+        project = Project(project_id=project_id)
+        project_dict = project.dict(by_alias=True)
+        project_dict.pop("_id", None)  # ← امسح الـ _id عشان MongoDB يولده تلقائياً
+        result = await self.collection.insert_one(project_dict)
+        project.id = str(result.inserted_id)
+        return project
         """
         Creates a new project document in MongoDB.
 
@@ -55,6 +61,11 @@ class ProjectModel(DataBaseModel):
         pass
 
     async def get_project(self, project_id: str) -> Optional[Project]:
+        doc = await self.collection.find_one({"project_id": project_id})
+        if not doc:
+            return None
+        doc["_id"] = str(doc["_id"])  # ← حوّل ObjectId لـ string
+        return Project(**doc)
         """
         Finds a project by its project_id string.
 
@@ -70,6 +81,10 @@ class ProjectModel(DataBaseModel):
         pass
 
     async def get_project_or_create_one(self, project_id: str) -> Project:
+        existing = await self.get_project(project_id)
+        if existing:
+            return existing
+        return await self.create_project(project_id)
         """
         Idempotent upsert: returns existing project or creates a new one.
         This is the primary method called from the upload route.
@@ -83,6 +98,10 @@ class ProjectModel(DataBaseModel):
         pass
 
     async def get_all_projects(self) -> List[Project]:
+        docs = await self.collection.find({}).to_list(length=None)
+        for doc in docs:
+            doc["_id"] = str(doc["_id"])  # ← نفس الحل
+        return [Project(**doc) for doc in docs]
         """
         Returns all projects in the collection (useful for admin/debug).
 

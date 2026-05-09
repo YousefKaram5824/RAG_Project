@@ -38,11 +38,11 @@ class ChunkModel(DataBaseModel):
         super().__init__()
         self.collection = self.get_collection(self.COLLECTION_NAME)
 
-    async def insert_many_chunks(
-        self,
-        chunks: List[dict],
-        project_id: str
-    ) -> int:
+    async def insert_many_chunks(self, chunks: List[dict], project_id: str) -> int:
+        for chunk in chunks:
+            chunk["chunk_project_id"] = project_id
+        await self.collection.insert_many(chunks)
+        return len(chunks)
         """
         Batch-inserts all chunks for a project into MongoDB.
 
@@ -61,12 +61,12 @@ class ChunkModel(DataBaseModel):
         # TODO: implement batch insert
         pass
 
-    async def get_chunks_by_project_id(
-        self,
-        project_id: str,
-        skip: int = 0,
-        limit: int = 50
-    ) -> List[DataChunk]:
+    async def get_chunks_by_project_id(self, project_id: str, skip: int = 0, limit: int = 50) -> List[DataChunk]:
+        cursor = self.collection.find(
+            {"chunk_project_id": project_id}
+        ).sort("chunk_order", 1).skip(skip).limit(limit)
+        docs = await cursor.to_list(length=limit)
+        return [DataChunk(**doc) for doc in docs]
         """
         Paginated fetch of all chunks for a project.
         Called repeatedly by the push endpoint to embed chunks in batches.
@@ -90,6 +90,9 @@ class ChunkModel(DataBaseModel):
         pass
 
     async def get_chunk_count(self, project_id: str) -> int:
+        return await self.collection.count_documents(
+            {"chunk_project_id": project_id}
+        )
         """
         Returns the total number of chunks for a project.
         Useful for pagination math in the push endpoint.
@@ -103,6 +106,10 @@ class ChunkModel(DataBaseModel):
         pass
 
     async def delete_chunks_by_project_id(self, project_id: str) -> int:
+        result = await self.collection.delete_many(
+            {"chunk_project_id": project_id}
+        )
+        return result.deleted_count
         """
         Deletes all chunks for a project.
         Called when do_reset=True is passed to the process endpoint.
