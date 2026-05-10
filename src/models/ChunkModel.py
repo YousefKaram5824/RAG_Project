@@ -25,12 +25,14 @@ class ChunkModel(DataBaseModel):
         self,
         project_id: str,
         skip: int = 0,
-        limit: int = 50
+        limit: int = 0
     ):
-        cursor = self.collection.find(
+        query = self.collection.find(
             {"chunk_project_id": project_id}
-        ).sort("chunk_order", 1).skip(skip).limit(limit)
-        docs = await cursor.to_list(length=limit)
+        ).sort("chunk_order", 1).skip(skip)
+        if limit > 0:
+            query = query.limit(limit)
+        docs = await query.to_list(length=limit if limit > 0 else None)
         return [DataChunk(**doc) for doc in docs]
 
     async def get_chunk_count(self, project_id: str):
