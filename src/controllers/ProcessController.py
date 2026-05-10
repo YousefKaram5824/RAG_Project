@@ -38,9 +38,10 @@ class ProcessController(BaseController):
     def preprocess_arabic(self, text: str) -> str:
         try:
             reshaped = arabic_reshaper.reshape(text)
-            return reshaped  # ← شيل get_display
+            bidi_text = get_display(reshaped)
+            return bidi_text
         except Exception as e:
-            print(f"⚠️ Arabic preprocessing failed: {e}")
+            print(f"Arabic preprocessing failed: {e}")
             return text
     
     def is_arabic(self, text: str) -> bool:
