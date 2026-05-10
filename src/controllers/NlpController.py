@@ -74,30 +74,27 @@ class NlpController(BaseController):
         language: str = "en"
     ) -> dict:
 
-        
-            relevant_chunks = await self.search_by_vector(project_id, question, top_k)
+        relevant_chunks = await self.search_by_vector(project_id, question, top_k)
 
-        
-            system_template = self.template_parser.get("system_prompt", language)
-            footer_template = self.template_parser.get("footer_prompt", language)
+        self.template_parser.set_language(language)
+        system_template = self.template_parser.get("rag", "system_prompt")
+        footer_template = self.template_parser.get("rag", "footer_template_prompt")
 
-            
-            full_prompt = self.template_parser.build_prompt(
-                question=question,
-                chunks=relevant_chunks,
-                system_template=system_template,
-                footer_template=footer_template
-            )
+        full_prompt = self.template_parser.build_prompt(
+            question=question,
+            chunks=relevant_chunks,
+            system_template=system_template,
+            footer_template=footer_template
+        )
 
-            
-            messages = [{"role": "user", "content": full_prompt}]
-            answer = await self.llm_client.generate(messages)
+        messages = [{"role": "user", "content": full_prompt}]
+        answer = await self.llm_client.generate(messages)
 
-            return {
-                "answer": answer,
-                "full_prompt": full_prompt,  
-                "chat_history": messages      
-            }
+        return {
+            "answer": answer,
+            "full_prompt": full_prompt,
+            "chat_history": messages
+        }
 
     async def get_project_info(self, project_id: str) -> bool:
         return self.vector_db.collection_exists(project_id)
