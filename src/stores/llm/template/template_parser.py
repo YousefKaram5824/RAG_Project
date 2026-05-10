@@ -62,4 +62,16 @@ class TemplateParser:
             → "## Document No: 1\n### Content: Cache..."
         """
         # TODO: implement template loading and rendering
-        pass
+        module_path=f"stores.llm.template.locales.{self.language}.{group}"
+        if module_path in self._module_cache:
+            module=self._module_cache[module_path]
+        else:
+            module=importlib.import_module(module_path)
+            self._module_cache[module_path]=module
+        if not hasattr(module, key):
+            raise ValueError(f"Template key '{key}' not found in {module_path}")
+        template=getattr(module,key)
+        if variables:
+            for k,v in variables.items():
+                template=template.replace(f"${k}",str(v))
+        return template

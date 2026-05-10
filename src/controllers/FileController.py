@@ -29,6 +29,9 @@ class FileController(BaseController):
         super().__init__()
 
     def get_file_path(self, project_id: str, filename: str) -> str:
+        project_dir = self.get_files_dir(project_id)
+        return os.path.join(project_dir, filename)
+
         """
         Returns the full absolute path where an uploaded file should be stored.
         Creates the project directory if it does not exist.
@@ -53,6 +56,10 @@ class FileController(BaseController):
         pass
 
     def list_project_files(self, project_id: str) -> list:
+        project_dir = self.get_files_dir(project_id)
+        if not os.path.exists(project_dir):
+            return []
+        return os.listdir(project_dir)
         """
         Returns a list of filenames in a project's upload folder.
         Useful for debugging or displaying available documents.
