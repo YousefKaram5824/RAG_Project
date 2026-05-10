@@ -46,22 +46,9 @@ async def upload_file(
     project_model: ProjectModel = Depends(ProjectModel),
     project_controller: ProjectController = Depends(ProjectController)
 ):
-    """
-    Flow:
-        1. Validate file MIME type and size via DataController ✅
-        2. Get/create the project in MongoDB via ProjectModel
-        3. Resolve the save path via FileController
-        4. Stream-write the file to disk using aiofiles
-        5. Return success with the project's MongoDB _id
 
-    TODO (Pair B + Pair A):
-        Implement the body below by calling the appropriate controllers.
-        Use aiofiles.open(file_path, "wb") and await file.read() in chunks.
-    """
-    # TODO: implement upload endpoint body
-    
-
-    is_valid, signal =await data_controller.validate_file(file=file,settings=settings)
+    # Validate file type and size
+    is_valid, signal = data_controller.validate_file(file=file)
     if not is_valid:
         if signal == ResponseSignal.FILE_TYPE_NOT_SUPPORTED:
             raise HTTPException(
@@ -78,28 +65,15 @@ async def upload_file(
             detail="Invalid File"
         )
 
+    # Create or get project in MongoDB
+    project = await project_model.get_project_or_create_one(project_id=dir_name)
 
-    project_data = {
-        "project_name": dir_name,
-        "original_filename": file.filename
-    }
-
-    created_project = await project_model.create_project(project_data)
-
-    if not created_project:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to create project"
-        )
-
-    project_id = str(created_project["_id"])
-
-    project_dir_path = project_controller.get_project_path(project_id=project_id)
-    os.makedirs(project_dir_path,exist_ok=True)
+    project_dir_path = project_controller.get_project_path(project_id=dir_name)
+    os.makedirs(project_dir_path, exist_ok=True)
 
     file_path, file_id = utilities.generate_unique_filepath(
         orig_file_name=file.filename,
-        project_id=project_id
+        project_id=dir_name
     )
 
     try:
@@ -120,9 +94,9 @@ async def upload_file(
         await file.close()
 
     return {
-        "signal": ResponseSignal.PROCESSING_SUCCESS.value,
+        "signal": ResponseSignal.FILE_UPLOAD_SUCCESS.value,
         "message": "File uploaded successfully",
-        "project_id":project_id,
+        "project_id": dir_name,
         "file_id": file_id
     }
 
