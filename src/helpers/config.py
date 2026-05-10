@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings,SettingsConfigDict
 from typing import List
 
 
@@ -28,11 +28,14 @@ class Settings(BaseSettings):
     MAX_RESPONSE_TOKENS: int = 500
     TEMPERATURE: float = 0.1
 
+    VECTOR_DB_URL: str = "http://qdrant:6333"
     VECTOR_DB_PATH: str = "assets/db/qdrant_data"
     VECTOR_DISTANCE_METRIC: str = "Cosine"
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        extra="ignore"
+    )
 
 
 def get_settings() -> Settings:

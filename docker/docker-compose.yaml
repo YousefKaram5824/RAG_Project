@@ -1,4 +1,4 @@
-version: "3.8"
+
 
 # =============================================================================
 # docker-compose.yaml — Infrastructure Services
@@ -20,7 +20,27 @@ version: "3.8"
 # =============================================================================
 
 services:
-
+  # backend
+  rag_app:
+    build: 
+      context: ../src
+      dockerfile: Dockerfile
+    container_name: rag_fastapi_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    env_file: ../src/.env
+    depends_on:
+      - mongodb
+      - qdrant
+    volumes:
+      - ../src:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/docs"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
   # ---------------------------------------------------------------------------
   # SERVICE 1: MongoDB
   # ---------------------------------------------------------------------------
@@ -42,6 +62,13 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     volumes:
       - ./mongodb:/data/db      # persists data on your disk under docker/mongodb/
+    
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
 
   # ---------------------------------------------------------------------------
   # SERVICE 2: Qdrant (Vector Database)
@@ -62,3 +89,10 @@ services:
       - "6334:6334"             # gRPC
     volumes:
       - ../src/assets/db/qdrant_data:/qdrant/storage   # persists vectors on disk
+    
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:6333/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+   

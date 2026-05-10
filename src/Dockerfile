@@ -29,6 +29,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     libgomp1 \
     gcc \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # ── Layer 1: Install Python dependencies (cached unless requirements.txt changes) ──
@@ -46,4 +47,4 @@ EXPOSE 5000
 
 # Start the server
 # --host 0.0.0.0 makes it accessible from outside the container
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
