@@ -1,4 +1,4 @@
-from controllers import ProjectController
+from controllers.ProjectController import ProjectController
 import os
 import re # Regex
 import uuid

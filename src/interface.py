@@ -60,7 +60,7 @@ language = st.sidebar.selectbox("Response language", ["en", "ar"])
 st.sidebar.markdown("---")
 st.sidebar.markdown("**API Status**")
 try:
-    r = requests.get(f"http://localhost:5000/", timeout=2) # Health check
+    r = requests.get(f"http://localhost:5000/health", timeout=2) # Health check
     st.sidebar.success("✅ API connected")
 except:
     st.sidebar.error("❌ API not reachable — start FastAPI first")
@@ -123,7 +123,7 @@ with col2:
         }
         response = requests.post(f"{API_BASE}/data/process/{pid}", json=body)
         if response.status_code == 200:
-            st.success(f"Created {response.json().get('inserted chunks')} chunks in MongoDB.")
+            st.success(f"Created {response.json().get('inserted_chunks')} chunks in MongoDB.")
         else:
             st.error("Processing failed.")
 
