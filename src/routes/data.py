@@ -21,7 +21,6 @@
 import aiofiles
 import os
 import logging
-from fastapi.responses import JSONResponse
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status
 from helpers.config import Settings, get_settings
 from controllers.DataController import DataController
@@ -35,14 +34,17 @@ from models import ResponseSignal
 from helpers import utilities
 
 logger = logging.getLogger('uvicorn.error')
-data_router = APIRouter(prefix="/api/data", tags=["data"])
+data_router = APIRouter(tags=["data"])
 
 
 @data_router.post("/upload/{dir_name}")
 async def upload_file(
     dir_name: str,
     file: UploadFile = File(...),
-    settings: Settings = Depends(get_settings)
+    settings: Settings = Depends(get_settings),
+    data_controller: DataController = Depends(DataController),
+    project_model: ProjectModel = Depends(ProjectModel),
+    project_controller: ProjectController = Depends(ProjectController)
 ):
     """
     Flow:
@@ -57,10 +59,9 @@ async def upload_file(
         Use aiofiles.open(file_path, "wb") and await file.read() in chunks.
     """
     # TODO: implement upload endpoint body
-    data_controller = DataController()
-    project_controller = ProjectController()
+    
 
-    is_valid, signal = data_controller.validate_file(file)
+    is_valid, signal =await data_controller.validate_file(file=file,settings=settings)
     if not is_valid:
         if signal == ResponseSignal.FILE_TYPE_NOT_SUPPORTED:
             raise HTTPException(
@@ -72,11 +73,33 @@ async def upload_file(
                 status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
                 detail=f"File size exceeds the maximum allowed size of {settings.FILE_MAX_SIZE_MB} MB."
             )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid File"
+        )
 
-    project_dir_path = project_controller.get_project_path(project_id=dir_name)
+
+    project_data = {
+        "project_name": dir_name,
+        "original_filename": file.filename
+    }
+
+    created_project = await project_model.create_project(project_data)
+
+    if not created_project:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to create project"
+        )
+
+    project_id = str(created_project["_id"])
+
+    project_dir_path = project_controller.get_project_path(project_id=project_id)
+    os.makedirs(project_dir_path,exist_ok=True)
+
     file_path, file_id = utilities.generate_unique_filepath(
         orig_file_name=file.filename,
-        project_id=dir_name
+        project_id=project_id
     )
 
     try:
@@ -85,17 +108,21 @@ async def upload_file(
                 await f.write(chunk)
     except Exception as e:
         logger.error(f"Error while uploading file: {e}")
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={
-                "signal": ResponseSignal.FILE_UPLOAD_FAILED.value
-            }
+
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to upload file"
         )
-    project_model = ProjectModel()
-    await project_model.get_project_or_create_one(project_id=dir_name)
+    finally:
+        await file.close()
+
     return {
         "signal": ResponseSignal.PROCESSING_SUCCESS.value,
         "message": "File uploaded successfully",
+        "project_id":project_id,
         "file_id": file_id
     }
 
@@ -104,34 +131,12 @@ async def upload_file(
 async def process_file(
     project_id: str,
     request: RequestProcess,
-    settings: Settings = Depends(get_settings)
+    settings: Settings = Depends(get_settings),
+    project_model: ProjectModel = Depends(ProjectModel),
+    chunk_model: ChunkModel = Depends(ChunkModel),
+    process_controller: ProcessController = Depends(ProcessController)
 ):
-    """
-    Step 2: Loads the uploaded file, chunks it, and stores chunks in MongoDB.
-
-    Args (path):
-        project_id: The MongoDB _id of the project (returned by upload)
-    Args (body):
-        RequestProcess: {project_id (filename), chunk_size, overlap, do_reset}
-
-    Returns:
-        int — number of chunks created and inserted into MongoDB
-
-    Flow:
-        1. Look up the project in MongoDB (return 404 if not found)
-        2. If do_reset=1, delete existing chunks via ChunkModel
-        3. Process the file via ProcessController.process_files()
-        4. Insert all chunks via ChunkModel.insert_many_chunks()
-        5. Return the chunk count
-
-    TODO (Pair B + Pair A):
-        Implement the body. Remember project_id in the URL is the MongoDB _id,
-        but request.project_id is the filename inside the project folder.
-    """
-    # TODO: implement process endpoint body'
-    
-     # 1. Look up project in MongoDB
-    project_model = ProjectModel()
+    # 1. Look up project in MongoDB
     project = await project_model.get_project_or_create_one(project_id=project_id)
 
     if not project:
@@ -141,18 +146,14 @@ async def process_file(
         )
 
     # 2. If do_reset=1, delete existing chunks
-    chunk_model = ChunkModel()
-
     if request.do_reset == 1:
         await chunk_model.delete_chunks_by_project_id(project_id=project_id)
 
     # 3. Process the file → get chunks list
-    process_controller = ProcessController()
-
     try:
         chunks = process_controller.process_files(
             project_id=project_id,
-            filename=request.project_id,   # ← الفايل نيم جاي من body
+            filename=request.project_id,   # filename from body
             chunk_size=request.chunk_size,
             overlap=request.overlap
         )
@@ -177,8 +178,7 @@ async def process_file(
     }
 
 @data_router.get("/chunks/{project_id}")
-async def get_chunks(project_id: str):
-    chunk_model = ChunkModel()
+async def get_chunks(project_id: str, chunk_model: ChunkModel = Depends(ChunkModel)):
     chunks = await chunk_model.get_chunks_by_project_id(project_id=project_id)
     return {
         "project_id": project_id,
@@ -191,3 +191,4 @@ async def get_chunks(project_id: str):
             for c in chunks
         ]
     }
+

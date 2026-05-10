@@ -22,21 +22,39 @@
 #   Do NOT instantiate NlpController directly inside these routes.
 # =============================================================================
 
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, Request, HTTPException,status,Depends
 from models.ProjectModel import ProjectModel
 from models.ChunkModel import ChunkModel
 from controllers.NlpController import NlpController
 from routes.schema.nlp import PushDataRequest, SearchRequest
 
-nlp_router = APIRouter(prefix="/api/nlp", tags=["nlp"])
+nlp_router = APIRouter(tags=["nlp"])
 
 
 @nlp_router.post("/index/push/{project_id}")
 async def push_to_index(
     project_id: str,
     request_body: PushDataRequest,
-    request: Request
+    request: Request,
+     project_model: ProjectModel = Depends(ProjectModel),
+    chunk_model: ChunkModel = Depends(ChunkModel)
 ):
+    #1,2 look up the project and fetch all chunks
+    nlp_controller: NlpController = request.app.state.nlp_controller
+    
+    project = await project_model.get_project(project_id)
+    if not project:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Project not found"
+        )
+
+    chunks=await chunk_model.get_chunks_by_project_id(project_id)
+    if not chunks:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No chunks found for this project.")
+    #3 push data
+    count=await nlp_controller.push_data_to_index(project_id=project_id,chunks=chunks,do_reset=request_body.do_reset)
+    return {"massage":f"Successfully pushed {count} chunks to index."}
     """
     Step 3: Embeds chunks from MongoDB and stores vectors in Qdrant.
 
@@ -56,7 +74,7 @@ async def push_to_index(
         Use ChunkModel().get_chunks_by_project_id() with pagination loop.
     """
     # TODO: implement push endpoint body
-    pass
+
 
 
 @nlp_router.post("/index/search/{project_id}")
@@ -65,6 +83,11 @@ async def semantic_search(
     request_body: SearchRequest,
     request: Request
 ):
+    # Access the controller you wired in main.py
+    nlp_controller: NlpController=request.app.state.nlp_controller
+    #call the search method
+    results=await nlp_controller.search_by_vector(project_id=project_id,query=request_body.text,top_k=request_body.top_k)
+    return {"results":results}
     """
     Step 4: Semantic similarity search — no LLM involved.
 
@@ -80,7 +103,7 @@ async def semantic_search(
         Call request.app.state.nlp_controller.search_by_vector(...)
     """
     # TODO: implement search endpoint body
-    pass
+
 
 
 @nlp_router.post("/index/answer/{project_id}")
@@ -89,6 +112,14 @@ async def rag_answer(
     request_body: SearchRequest,
     request: Request
 ):
+    nlp_controller: NlpController=request.app.state.nlp_controller
+    response_data=await nlp_controller.answer_rag_question(
+        project_id=project_id,
+        query=request_body.text,
+        top_k=request_body.top_k,
+        language=request_body.language
+    )
+    return response_data
     """
     Step 5: Full RAG — retrieve, augment, generate.
 
@@ -107,11 +138,15 @@ async def rag_answer(
         Call request.app.state.nlp_controller.answer_rag_question(...)
     """
     # TODO: implement RAG answer endpoint body
-    pass
+    
 
 
 @nlp_router.get("/index/info/{project_id}")
 async def get_index_info(project_id: str, request: Request):
+    #access controller
+    nlp_controller: NlpController=request.app.state.nlp_controller
+    results=await nlp_controller.get_project_info(project_id)
+    return {"results":results}
     """
     Checks whether a Qdrant vector collection exists for this project.
 
@@ -123,4 +158,4 @@ async def get_index_info(project_id: str, request: Request):
         Call request.app.state.nlp_controller.get_project_info(project_id)
     """
     # TODO: implement info endpoint body
-    pass
+
