@@ -31,7 +31,8 @@ class VectorDBInterface(ABC):
         self,
         collection_name: str,
         query_vector: List[float],
-        top_k: int = 5
+        top_k: int = 5,
+        source_file: str = None
     ) -> list:
         pass
 

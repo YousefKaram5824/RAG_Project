@@ -42,7 +42,7 @@ class TemplateParser:
         for i, chunk in enumerate(chunks, start=1):
             doc_block = self.get(
                 "rag", "document_prompt",
-                {"doc_id": i, "text": chunk.get("text", "")}
+                {"doc_id": i, "text": chunk.get("text", ""), "source": chunk.get("source", "unknown")}
             )
             prompt_parts.append(doc_block.strip())
 

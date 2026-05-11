@@ -1,4 +1,5 @@
 from typing import List
+from collections import Counter
 from controllers.BaseController import BaseController
 
 
@@ -42,11 +43,24 @@ class NlpController(BaseController):
 
         return {"message": f"Successfully pushed {len(chunks)} chunks to index."}
 
+    def _deduplicate_by_source(self, results: list):
+        if not results:
+            return results
+        source_counts = Counter(r.get("source", "") for r in results)
+        if len(source_counts) <= 1:
+            return results
+        dominant_source, _ = source_counts.most_common(1)[0]
+        dominant = [r for r in results if r.get("source", "") == dominant_source]
+        others   = [r for r in results if r.get("source", "") != dominant_source]
+
+        return dominant + others
+
     async def search_by_vector(
         self,
         project_id: str,
         query_text: str,
-        top_k: int = 5
+        top_k: int = 5,
+        source_file: str = None
     ) -> list:
         query_vector = self.embed_client.embed_text(query_text, doc_type="query")
 
@@ -54,6 +68,7 @@ class NlpController(BaseController):
             collection_name=project_id,
             query_vector=query_vector,
             top_k=top_k,
+            source_file=source_file,
         )
 
         formatted_results = []
@@ -61,7 +76,12 @@ class NlpController(BaseController):
             formatted_results.append({
                 "text": r.text,
                 "score": r.score,
+                "source": r.source,
             })
+
+        # Apply post-retrieval deduplication when no explicit filter is set
+        if not source_file:
+            formatted_results = self._deduplicate_by_source(formatted_results)
 
         return formatted_results
 
@@ -70,10 +90,13 @@ class NlpController(BaseController):
         project_id: str,
         question: str,
         top_k: int = 5,
-        language: str = "en"
+        language: str = "en",
+        source_file: str = None
     ) -> dict:
 
-        relevant_chunks = await self.search_by_vector(project_id, question, top_k)
+        relevant_chunks = await self.search_by_vector(
+            project_id, question, top_k, source_file
+        )
 
         self.template_parser.set_language(language)
         system_template = self.template_parser.get("rag", "system_prompt")

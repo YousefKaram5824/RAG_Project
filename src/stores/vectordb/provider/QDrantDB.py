@@ -14,6 +14,7 @@
 #   service for production consistency.
 
 import logging
+import os
 from typing import List
 
 from qdrant_client import QdrantClient
@@ -21,6 +22,9 @@ from qdrant_client.models import (
     VectorParams,
     Distance,
     PointStruct,
+    Filter,
+    FieldCondition,
+    MatchValue,
 )
 
 from stores.vectordb.VectorDBInterface import VectorDBInterface
@@ -106,17 +110,24 @@ class QDrantDB(VectorDBInterface):
     ):
         full_name = self._collection_name(collection_name)
 
-        points = [
-            PointStruct(
-                id=i,
-                vector=vectors[i],
-                payload={
-                    "text":     documents[i].chunk_text,
-                    "metadata": documents[i].chunk_metadata,
-                },
+        points = []
+        for i in range(len(documents)):
+            # Extract source_file as basename for user-friendly filtering
+            raw_source = documents[i].chunk_metadata.get("source", "")
+            source_file = os.path.basename(raw_source) if raw_source else ""
+
+            points.append(
+                PointStruct(
+                    id=i,
+                    vector=vectors[i],
+                    payload={
+                        "text":        documents[i].chunk_text,
+                        "metadata":    documents[i].chunk_metadata,
+                        "source_file": source_file,
+                        "chunk_order": documents[i].chunk_order,
+                    },
+                )
             )
-            for i in range(len(documents))
-        ]
 
         self.client.upsert(collection_name=full_name, points=points)
         logger.info(
@@ -129,18 +140,36 @@ class QDrantDB(VectorDBInterface):
         collection_name: str,
         query_vector: List[float],
         top_k: int = 5,
+        source_file: str = None,
     ) -> List[RetrievalDocument]:
 
         full_name = self._collection_name(collection_name)
 
+        # Build optional metadata filter
+        query_filter = None
+        if source_file:
+            query_filter = Filter(
+                must=[
+                    FieldCondition(
+                        key="source_file",
+                        match=MatchValue(value=source_file),
+                    )
+                ]
+            )
+
         results = self.client.search(
             collection_name=full_name,
             query_vector=query_vector,
+            query_filter=query_filter,
             limit=top_k,
         )
 
         return [
-            RetrievalDocument(text=r.payload["text"], score=r.score)
+            RetrievalDocument(
+                text=r.payload["text"],
+                score=r.score,
+                source=r.payload.get("source_file", ""),
+            )
             for r in results
         ]
 

@@ -59,6 +59,10 @@ class SearchRequest(BaseModel):
         default="en",
         description="Response language: 'en' for English, 'ar' for Arabic"
     )
+    source_file: str = Field(
+        default=None,
+        description="Optional filename filter — restricts retrieval to chunks from this document only (e.g., 'Python_Full-Stack_Developer.pdf')"
+    )
 
     @field_validator("text")
     @classmethod

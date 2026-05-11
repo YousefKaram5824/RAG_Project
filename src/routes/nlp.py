@@ -47,7 +47,8 @@ async def semantic_search(
     results = await nlp_controller.search_by_vector(
         project_id=project_id,
         query_text=request_body.text,
-        top_k=request_body.top_k
+        top_k=request_body.top_k,
+        source_file=request_body.source_file,
     )
     return {"results": results}
 
@@ -62,7 +63,8 @@ async def rag_answer(
         project_id=project_id,
         question=request_body.text,
         top_k=request_body.top_k,
-        language=request_body.language
+        language=request_body.language,
+        source_file=request_body.source_file,
     )
     return response_data
 

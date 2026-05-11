@@ -26,7 +26,7 @@ Do not use your training knowledge — rely solely on the document context.
 # $doc_id  → sequential number (1, 2, 3, ...)
 # $text    → the raw chunk text
 document_prompt = """
-## Document No: $doc_id
+## Document No: $doc_id (Source: $source)
 ### Content:
 $text
 ---

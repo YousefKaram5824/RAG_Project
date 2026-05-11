@@ -31,3 +31,4 @@ class DataChunk(BaseModel):
 class RetrievalDocument(BaseModel):
     text: str
     score: float
+    source: str = ""

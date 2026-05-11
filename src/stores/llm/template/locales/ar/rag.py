@@ -27,7 +27,7 @@ system_prompt = """أنت مساعد وثائق دقيق ومفيد.
 """
 
 document_prompt = """
-## وثيقة رقم: $doc_id
+## وثيقة رقم: $doc_id (المصدر: $source)
 ### المحتوى:
 $text
 ---
