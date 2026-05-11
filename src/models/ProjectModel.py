@@ -12,7 +12,7 @@ class ProjectModel(DataBaseModel):
 
     async def create_project(self, project_id: str) -> Project:
         project = Project(project_id=project_id)
-        result = await self.collection.insert_one(project.model_dump(by_alias=True))
+        result = await self.collection.insert_one(project.model_dump(by_alias=True, exclude_none=True))
         project.id = str(result.inserted_id)
         return project
 

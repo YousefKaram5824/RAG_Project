@@ -11,6 +11,13 @@ class Project(BaseModel):
         default_factory=lambda: datetime.now()
     )
 
+    @field_validator("id", mode="before")
+    @classmethod
+    def coerce_object_id_to_str(cls, v):
+        if isinstance(v, ObjectId):
+            return str(v)
+        return v
+
     @field_validator("project_id")
     @classmethod
     def project_id_must_be_alphanumeric(cls, v):
