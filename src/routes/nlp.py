@@ -27,6 +27,7 @@ from models.ProjectModel import ProjectModel
 from models.ChunkModel import ChunkModel
 from controllers.NlpController import NlpController
 from routes.schema.nlp import PushDataRequest, SearchRequest
+from bson import ObjectId
 
 nlp_router = APIRouter(tags=["nlp"])
 
@@ -42,19 +43,48 @@ async def push_to_index(
     #1,2 look up the project and fetch all chunks
     nlp_controller: NlpController = request.app.state.nlp_controller
     
+    if not ObjectId.is_valid(project_id):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid project_id format"
+        )
+    
+    if request_body.do_reset not in [0, 1]:
+        raise HTTPException(
+            status_code=400,
+            detail="do_reset must be 0 or 1"
+        )
+
     project = await project_model.get_project(project_id)
     if not project:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Project not found"
         )
+    
+    try:
+        chunks=await chunk_model.get_chunks_by_project_id(project_id)
+    except Exception as e:
+        logger.error(f"Chunk fetch failed: {e}")
 
-    chunks=await chunk_model.get_chunks_by_project_id(project_id)
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to fetch chunks"
+        )
+
     if not chunks:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No chunks found for this project.")
     #3 push data
-    count=await nlp_controller.push_data_to_index(project_id=project_id,chunks=chunks,do_reset=request_body.do_reset)
-    return {"massage":f"Successfully pushed {count} chunks to index."}
+    try:
+        count=await nlp_controller.push_data_to_index(project_id=project_id,chunks=chunks,do_reset=request_body.do_reset)
+    except Exception as e:
+        logger.error(f"Vector indexing failed: {e}")
+
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to push vectors to Qdrant"
+        )
+    return {"message":f"Successfully pushed {count} chunks to index."}
     """
     Step 3: Embeds chunks from MongoDB and stores vectors in Qdrant.
 
@@ -81,12 +111,40 @@ async def push_to_index(
 async def semantic_search(
     project_id: str,
     request_body: SearchRequest,
-    request: Request
+    request: Request,
+    project_model: ProjectModel = Depends(ProjectModel)
 ):
     # Access the controller you wired in main.py
     nlp_controller: NlpController=request.app.state.nlp_controller
     #call the search method
-    results=await nlp_controller.search_by_vector(project_id=project_id,query=request_body.text,top_k=request_body.top_k)
+    if not ObjectId.is_valid(project_id):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid project_id format"
+        )
+    if not request_body.text.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Search text cannot be empty"
+        )
+    if request_body.top_k <= 0:
+        raise HTTPException(
+            status_code=400,
+            detail="top_k must be greater than 0"
+        )
+    project = await project_model.get_project(project_id)
+    if not project:
+        raise HTTPException(
+        status_code=404,
+        detail="Project not found"
+        )
+    try:
+        results=await nlp_controller.search_by_vector(project_id=project_id,query_text=request_body.text,top_k=request_body.top_k)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Semantic search failed:{str(e)}"
+        )
     return {"results":results}
     """
     Step 4: Semantic similarity search — no LLM involved.
@@ -110,15 +168,40 @@ async def semantic_search(
 async def rag_answer(
     project_id: str,
     request_body: SearchRequest,
-    request: Request
+    request: Request,
+    project_model: ProjectModel = Depends(ProjectModel)
 ):
     nlp_controller: NlpController=request.app.state.nlp_controller
-    response_data=await nlp_controller.answer_rag_question(
-        project_id=project_id,
-        query=request_body.text,
-        top_k=request_body.top_k,
-        language=request_body.language
-    )
+    
+    if not ObjectId.is_valid(project_id):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid project_id format"
+        )
+
+    if not request_body.text.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Question cannot be empty"
+        )
+    project = await project_model.get_project(project_id)
+    if not project:
+        raise HTTPException(
+            status_code=404,
+            detail="Project not found"
+        )
+    try:
+        response_data=await nlp_controller.answer_rag_question(
+            project_id=project_id,
+            question=request_body.text,
+            top_k=request_body.top_k,
+            language=request_body.language
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to generate RAG answer:{str(e)}"
+        )
     return response_data
     """
     Step 5: Full RAG — retrieve, augment, generate.
@@ -145,7 +228,20 @@ async def rag_answer(
 async def get_index_info(project_id: str, request: Request):
     #access controller
     nlp_controller: NlpController=request.app.state.nlp_controller
-    results=await nlp_controller.get_project_info(project_id)
+
+    if not ObjectId.is_valid(project_id):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid project_id format"
+        )
+    try:
+        results=await nlp_controller.get_project_info(project_id)
+    except Exception as e:
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch index info: {str(e)}"
+        )
     return {"results":results}
     """
     Checks whether a Qdrant vector collection exists for this project.

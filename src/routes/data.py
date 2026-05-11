@@ -21,7 +21,7 @@
 import aiofiles
 import os
 import logging
-from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status
+from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status,Request
 from helpers.config import Settings, get_settings
 from controllers.DataController import DataController
 from controllers.FileController import FileController
@@ -32,6 +32,8 @@ from models.ChunkModel import ChunkModel
 from routes.schema.data import RequestProcess
 from models import ResponseSignal
 from helpers import utilities
+from bson import ObjectId
+from bson.errors import InvalidId
 
 logger = logging.getLogger('uvicorn.error')
 data_router = APIRouter(tags=["data"])
@@ -61,7 +63,7 @@ async def upload_file(
     # TODO: implement upload endpoint body
     
 
-    is_valid, signal =await data_controller.validate_file(file=file,settings=settings)
+    is_valid, signal = data_controller.validate_file(file=file)
     if not is_valid:
         if signal == ResponseSignal.FILE_TYPE_NOT_SUPPORTED:
             raise HTTPException(
@@ -83,13 +85,18 @@ async def upload_file(
         "project_name": dir_name,
         "original_filename": file.filename
     }
-
-    created_project = await project_model.create_project(project_data)
-
-    if not created_project:
+    try:
+        created_project = await project_model.create_project(project_data)
+    except Exception as e:
+        logger.error(f"MongoDB project creation failed: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to create project"
+        )
+    if not created_project:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to create project record"
         )
 
     project_id = str(created_project["_id"])
@@ -119,9 +126,10 @@ async def upload_file(
     finally:
         await file.close()
 
+    await project_model.update_project(project_id, {"stored_filename": file_id})
+
     return {
         "signal": ResponseSignal.FILE_UPLOAD_SUCCESS.value,
-        "message": "File uploaded successfully",
         "project_id":project_id,
         "file_id": file_id
     }
@@ -138,29 +146,122 @@ async def process_file(
 ):
    
     #1 look up the project
-    project=await project_model.get_project(project_id)
+    if not ObjectId.is_valid(project_id):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid project_id format"
+        )
+    if request.chunk_size <= 0:
+        raise HTTPException(
+            status_code=400,
+            detail="chunk_size must be greater than 0"
+        )
+
+    if request.overlap < 0:
+        raise HTTPException(
+            status_code=400,
+            detail="overlap cannot be negative"
+        )
+    if request.overlap >= request.chunk_size:
+        raise HTTPException(
+            status_code=400,
+            detail="overlap must be smaller than chunk_size"
+        )
+    try:
+        project=await project_model.get_project(project_id)
+    except InvalidId:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid MongoDB ObjectId"
+        )
+    except Exception as e:
+        logger.error(f"Project lookup failed: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail="Database error while fetching project"
+        )
     if not  project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Project not found")
+    stored_filename = project.get("stored_filename")
+    if request.project_name.strip()!=project.get("original_filename").strip():
+        raise HTTPException(
+            status_code=500,
+            detail="Enter Correct project name"
+        ) 
+
+    
+    if not stored_filename:
+        raise HTTPException(
+            status_code=500,
+            detail="Stored filename missing in project"
+        )
+
+    
     #2 If do reset
-    if request.do_reset:
-        await chunk_model.delete_chunks(project_id)
-    #3 Process the file
-    chunks=await process_controller.process_files(
-        project_id=project_id,
-        filename=request.project_id,
-        chunk_size=request.chunk_size,
-        overlap=request.overlap
-    )
-    #4 insert cunks  #5 and returns
-    if chunks:
-        
-        await chunk_model.insert_many_chunks(chunks=chuns,project_id=project_id)
-        return {
-            "signal": ResponseSignal.FILE_UPLOAD_SUCCESS.value,
-            "massage": "File processed successfully",
-            "inserted chunks": len(chunks)
-        }
-    return {"signal": ResponseSignal.FILE_UPLOAD_FAILED.value,"inserted_chunks": 0}
+    try:
+        if request.do_reset==1:
+            await chunk_model.delete_chunks_by_project_id(project_id)
+    except Exception as e:
+        logger.error(f"Chunk reset failed: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to reset existing chunks"
+        )
+    try:
+        chunks = process_controller.process_files(
+            project_id=project_id,
+            filename=stored_filename,
+            chunk_size=request.chunk_size,
+            overlap=request.overlap
+        )
+
+    except FileNotFoundError:
+        raise HTTPException(
+            status_code=404,
+            detail="File not found on disk"
+        )
+
+    except ValueError as e:
+        raise HTTPException(
+            status_code=400,
+            detail=str(e)
+        )
+
+    except Exception as e:
+        logger.error(f"File processing failed: {e}")
+
+        raise HTTPException(
+            status_code=500,
+            detail="Document processing failed"
+        )
+
+    
+    if not chunks:
+        raise HTTPException(
+            status_code=400,
+            detail="No chunks were generated from the document"
+        )
+
+   
+    try:
+
+        inserted_count = await chunk_model.insert_many_chunks(
+            chunks=chunks,
+            project_id=project_id
+        )
+
+    except Exception as e:
+        logger.error(f"Chunk insertion failed: {e}")
+
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to store chunks in MongoDB"
+        )
+
+    return {
+        "message": "File processed successfully",
+        "inserted_chunks": inserted_count
+    }
     """
     Step 2: Loads the uploaded file, chunks it, and stores chunks in MongoDB.
 

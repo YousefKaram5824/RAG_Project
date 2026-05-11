@@ -53,7 +53,7 @@ class FileController(BaseController):
             - Return the complete path
         """
         # TODO: implement path resolution
-        pass
+        
 
     def list_project_files(self, project_id: str) -> list:
         project_dir = self.get_files_dir(project_id)
@@ -70,4 +70,4 @@ class FileController(BaseController):
             - Handle the case where the directory does not exist yet
         """
         # TODO: implement directory listing
-        pass
+        

@@ -7,6 +7,7 @@ class Project(BaseModel):
 
     id: Optional[str] = Field(None, alias="_id")
     project_id: str
+    original_filename: str
     created_at: datetime = Field(
         default_factory=lambda: datetime.now()
     )

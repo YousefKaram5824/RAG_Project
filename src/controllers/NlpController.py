@@ -53,26 +53,31 @@ class NlpController(BaseController):
         do_reset: bool = False
     ) -> dict:
         if do_reset:
-            await self.vector_db.delete_collection(collection_name=project_id)
+            self.vector_db.delete_collection(collection_name=project_id)
+        if not self.vector_db.collection_exists(project_id):
+
+            self.vector_db.create_collection(
+                collection_name=project_id,
+                embedding_size=self.embed_client.embedding_size
+            )
     
         texts = [chunk.chunk_text for chunk in chunks]
     
-        embeddings = self.embed_client.generate_embeddings(texts)
+        embeddings = [
+            self.embed_client.embed_text(text)
+            for text in texts
+        ]
     
-        points = []
-        for i, chunk in enumerate(chunks):
-            points.append({
-                "id": chunk.id, # This might casue an issue
-                "vector": embeddings[i],
-                "payload": {
-                    "project_id": project_id, 
-                    "text": chunk.chunk_text,
-                    "metadata": chunk.chunk_metadata  
-                }
-            })
-    
-        await self.vector_db.upsert(collection_name=project_id, points=points)
-    
+        valid_documents = []
+        valid_vectors = []
+        for chunk,embedding in zip(chunks,embeddings):
+            if embedding is None:
+                continue
+            valid_documents.append(chunk)
+            valid_vectors.append(embedding)
+        
+        self.vector_db.add_documents(collection_name=project_id, documents=valid_documents,vectors=valid_vectors)
+        
         return {"message": f"Successfully pushed {len(chunks)} chunks to index."}
 
 
@@ -83,21 +88,24 @@ class NlpController(BaseController):
         top_k: int = 5
     ) -> list:
         
-        query_vector = self.embed_client.generate_embeddings([query_text], input_type="query")[0]
+        query_vector = self.embed_client.embed_text(text=query_text, doc_type="query")
 
-    
-        raw_results = await self.vector_db.search(
+        if query_vector is None:
+            return []
+
+        raw_results =  self.vector_db.search_by_vector(
             collection_name=project_id,
             query_vector=query_vector,
-            limit=top_k
+            top_k=top_k
         )
-
+        #MIN_SCORE = 0.84
         formatted_results = []
         for top in raw_results:
+            #if top.score<MIN_SCORE:
+                #continue
             formatted_results.append({
-                "text": top.payload.get("text", ""),    
-                "score": top.score,                      
-                "metadata": top.payload.get("metadata", {}) 
+                "text": top.text,    
+                "score": top.score,                     
             })
 
         return formatted_results
@@ -111,29 +119,35 @@ class NlpController(BaseController):
     ) -> dict:
 
         
-            relevant_chunks = await self.search_by_vector(project_id, question, top_k)
+        relevant_chunks = await self.search_by_vector(project_id=project_id,query_text=question, top_k=top_k)
+
+        self.template_parser.set_language(language)
+        system_template = self.template_parser.get("rag", "system_prompt")
+        doc_blocks=[]
+        for i,chunk in enumerate(relevant_chunks):
+            doc_blocks.append( self.template_parser.get("rag", "document_prompt",{"doc_id":i+1,"text": str(chunk)}))
+        footer_template = self.template_parser.get("rag", "footer_template_prompt")
 
         
-            system_template = self.template_parser.get("system_prompt", language)
-            footer_template = self.template_parser.get("footer_prompt", language)
+        full_prompt = (
+            system_template
+            + "\n".join(doc_blocks)
+            + footer_template
+            + f"\n\nQuestion: {question}"
+        )
 
-            
-            full_prompt = self.template_parser.build_prompt(
-                question=question,
-                chunks=relevant_chunks,
-                system_template=system_template,
-                footer_template=footer_template
-            )
+        
+        messages = [
+            {"role": "system", "content": system_template},
+            {"role": "user", "content": full_prompt}
+        ]
+        answer =  self.llm_client.generate_response(messages)
 
-            
-            messages = [{"role": "user", "content": full_prompt}]
-            answer = await self.llm_client.generate(messages)
-
-            return {
-                "answer": answer,
-                "full_prompt": full_prompt,  
-                "chat_history": messages      
-            }
+        return {
+            "answer": answer,
+            "full_prompt": full_prompt,  
+            "chat_history": messages      
+        }
     """
         Full RAG pipeline: retrieve relevant chunks, build a grounded prompt,
         call the LLM, and return the generated answer.
@@ -174,7 +188,26 @@ class NlpController(BaseController):
         # TODO: implement full RAG answer pipeline
     # pass
 
-    async def get_project_info(self, project_id: str) -> bool:
+    async def get_project_info(self, project_id: str) -> dict:
+
+        collection_name = self.vector_db._collection_name(project_id)
+        exists= self.vector_db.collection_exists(project_id)
+
+        if not exists:
+            return {
+                "indexed": False,
+                "chunks": 0,
+                "Collection":collection_name,
+                "massage": "project not pushed yet"
+            }
+        
+        info = self.vector_db.client.get_collection(collection_name)
+        return {
+            "indexed": True,
+            "Chunks":info.points_count,
+            "vectors_config":str(info.config.params.vectors) if info.config else None,
+            "Collection": collection_name
+        }
         """
         Checks whether a Qdrant collection exists for this project.
         Called by GET /api/nlp/index/info/{project_id}
@@ -186,4 +219,3 @@ class NlpController(BaseController):
             return self.vector_db.collection_exists(project_id)
         """
         # TODO: implement collection existence check
-        pass

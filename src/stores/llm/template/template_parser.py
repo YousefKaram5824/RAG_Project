@@ -66,8 +66,11 @@ class TemplateParser:
         if module_path in self._module_cache:
             module=self._module_cache[module_path]
         else:
-            module=importlib.import_module(module_path)
-            self._module_cache[module_path]=module
+            try:
+                module=importlib.import_module(module_path)
+                self._module_cache[module_path]=module
+            except ModuleNotFoundError:
+                raise ValueError(f"Template not found: {module_path}")
         if not hasattr(module, key):
             raise ValueError(f"Template key '{key}' not found in {module_path}")
         template=getattr(module,key)

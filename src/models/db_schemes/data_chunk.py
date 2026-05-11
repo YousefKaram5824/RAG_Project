@@ -6,7 +6,7 @@ class DataChunk(BaseModel):
     
     id: Optional[str] = Field(None, alias="_id")
     chunk_text: str
-    chunk_metadata: Dict[str, Any] = {}     # {"source": "file.pdf", "page": 2}
+    chunk_metadata: Dict[str, Any] = Field(default_factory=dict)    # {"source": "file.pdf", "page": 2}
     chunk_order: int = 0                    # sequential position in the document
     chunk_project_id: Optional[str] = None  # foreign key 
 
