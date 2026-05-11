@@ -1,0 +1,602 @@
+[
+  {
+    "query_id": 1,
+    "query": "How many years of Python experience does the candidate have?",
+    "language": "en",
+    "difficulty": "easy",
+    "expected_source": "Python_Full-Stack_Developer.pdf",
+    "expected_chunk_summary": "Skills section mentions Python experience",
+    "actual_retrieved_chunks": [
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8500034151685071,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Team Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages",
+        "score": 0.8493229578423829,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Technical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum",
+        "score": 0.8485530437039274,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Requirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:",
+        "score": 0.8479208536940586,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "Dubizzle - Summer Internship Program 2026",
+        "score": 0.844240843059697,
+        "source": "c76bcbeb_interndescription.txt"
+      }
+    ],
+    "llm_answer": "I could not find this information in the provided documents.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTeam Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTechnical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum\n---\n## Document No: 4 (Source: c76bcbeb_interndescription.txt)\n### Content:\nRequirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:\n---\n## Document No: 5 (Source: c76bcbeb_interndescription.txt)\n### Content:\nDubizzle - Summer Internship Program 2026\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: How many years of Python experience does the candidate have?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 2,
+    "query": "What is the candidate's highest level of education?",
+    "language": "en",
+    "difficulty": "easy",
+    "expected_source": "Python_Full-Stack_Developer.pdf",
+    "expected_chunk_summary": "Education section with degree info",
+    "actual_retrieved_chunks": [
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8582592824988338,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "petitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)",
+        "score": 0.8546193548231081,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Team Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages",
+        "score": 0.8513855760626002,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Requirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:",
+        "score": 0.8545315524545692,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "Dubizzle - Summer Internship Program 2026",
+        "score": 0.8500393965598414,
+        "source": "c76bcbeb_interndescription.txt"
+      }
+    ],
+    "llm_answer": "The candidate's highest level of education is a Bachelor of Computer Science and Information Systems.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\npetitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTeam Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages\n---\n## Document No: 4 (Source: c76bcbeb_interndescription.txt)\n### Content:\nRequirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:\n---\n## Document No: 5 (Source: c76bcbeb_interndescription.txt)\n### Content:\nDubizzle - Summer Internship Program 2026\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: What is the candidate's highest level of education?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 3,
+    "query": "What databases has the candidate worked with?",
+    "language": "en",
+    "difficulty": "easy",
+    "expected_source": "Full-Stack_Developer.pdf",
+    "expected_chunk_summary": "Skills or experience section listing databases",
+    "actual_retrieved_chunks": [
+      {
+        "text": "• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service",
+        "score": 0.8820844757850366,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8705665427803282,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Ahmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features",
+        "score": 0.8647503412565878,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Technical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum",
+        "score": 0.8641286601253052,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "• Designed and implemented the end-to-end REST API flow for Problem Reports, secured with protected API-key\nauthentication and custom middleware.\n• Eliminated query bottlenecks and introduced LRU caching, measurably reducing database load and server response\ntimes.\n• Resolved critical deadlocks and race conditions in Go spatial APIs, ensuring reliability under high-concurrency pro-\nduction loads.",
+        "score": 0.8628006177094476,
+        "source": "af669ff2_Ahmed.pdf"
+      }
+    ],
+    "llm_answer": "Based on the provided documents, the candidate has worked with the following databases:\n\n1. SQL Server (T-SQL)\n2. Oracle SQL Developer\n3. Relational databases (design experience mentioned, but no specific name mentioned)\n\nAdditionally, the candidate has experience with Entity Framework Core, which is an Object-Relational Mapping (ORM) framework that supports various databases, including SQL Server.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\n• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\nAhmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features\n---\n## Document No: 4 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTechnical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum\n---\n## Document No: 5 (Source: af669ff2_Ahmed.pdf)\n### Content:\n• Designed and implemented the end-to-end REST API flow for Problem Reports, secured with protected API-key\nauthentication and custom middleware.\n• Eliminated query bottlenecks and introduced LRU caching, measurably reducing database load and server response\ntimes.\n• Resolved critical deadlocks and race conditions in Go spatial APIs, ensuring reliability under high-concurrency pro-\nduction loads.\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: What databases has the candidate worked with?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 4,
+    "query": "What is the job title being hired for?",
+    "language": "en",
+    "difficulty": "easy",
+    "expected_source": "Software Engineer Job Description.txt",
+    "expected_chunk_summary": "Title line says Software Engineer",
+    "actual_retrieved_chunks": [
+      {
+        "text": "Technical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum",
+        "score": 0.8759343985349128,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Ahmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features",
+        "score": 0.8715823490057975,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service",
+        "score": 0.8714985456624945,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "This is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle",
+        "score": 0.8959979712465733,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "Dubizzle - Summer Internship Program 2026",
+        "score": 0.8756808099868096,
+        "source": "c76bcbeb_interndescription.txt"
+      }
+    ],
+    "llm_answer": "I could not find this information in the provided documents.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTechnical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\nAhmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\n• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service\n---\n## Document No: 4 (Source: c76bcbeb_interndescription.txt)\n### Content:\nThis is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle\n---\n## Document No: 5 (Source: c76bcbeb_interndescription.txt)\n### Content:\nDubizzle - Summer Internship Program 2026\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: What is the job title being hired for?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 5,
+    "query": "What programming languages are required for the job?",
+    "language": "en",
+    "difficulty": "easy",
+    "expected_source": "Software Engineer Job Description.txt",
+    "expected_chunk_summary": "Mentions fluency in Java and Python",
+    "actual_retrieved_chunks": [
+      {
+        "text": "Technical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum",
+        "score": 0.8966233200360804,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Team Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages",
+        "score": 0.8666079735398651,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "petitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)",
+        "score": 0.8660326478659686,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8643988425353871,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Ahmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features",
+        "score": 0.8555312632756942,
+        "source": "af669ff2_Ahmed.pdf"
+      }
+    ],
+    "llm_answer": "I could not find this information in the provided documents.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTechnical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTeam Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\npetitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)\n---\n## Document No: 4 (Source: af669ff2_Ahmed.pdf)\n### Content:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n## Document No: 5 (Source: af669ff2_Ahmed.pdf)\n### Content:\nAhmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: What programming languages are required for the job?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 6,
+    "query": "Is this candidate suitable for a backend role?",
+    "language": "en",
+    "difficulty": "medium",
+    "expected_source": "Python_Full-Stack_Developer.pdf + Software Engineer Job Description.txt",
+    "expected_chunk_summary": "Needs to match CV skills against job requirements",
+    "actual_retrieved_chunks": [
+      {
+        "text": "Ahmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features",
+        "score": 0.8635933769209563,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service",
+        "score": 0.8590071607956381,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "inventory management.\n• Delivered a fully responsive UI with Bootstrap across all device sizes.\nTechnologies: N-Tier Architecture, ASP.NET 9, Entity Framework Core, SQL Server, ASP.NET Identity, OAuth, Stripe\nAPI, Bootstrap\nQuizzly – Online Quiz Management System\ngithub.com/ahmedAlian7/Quizzly\nASP.NET Core MVC | Full-Stack | Team Lead",
+        "score": 0.8515838531610211,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Technical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum",
+        "score": 0.8499809300326033,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "• Designed and implemented the end-to-end REST API flow for Problem Reports, secured with protected API-key\nauthentication and custom middleware.\n• Eliminated query bottlenecks and introduced LRU caching, measurably reducing database load and server response\ntimes.\n• Resolved critical deadlocks and race conditions in Go spatial APIs, ensuring reliability under high-concurrency pro-\nduction loads.",
+        "score": 0.8471790757838022,
+        "source": "af669ff2_Ahmed.pdf"
+      }
+    ],
+    "llm_answer": "Yes, the candidate is suitable for a backend role. The documents highlight the candidate's experience and skills in building scalable RESTful APIs and full-stack applications using ASP.NET Core, C#, and SQL Server.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\nAhmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\n• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\ninventory management.\n• Delivered a fully responsive UI with Bootstrap across all device sizes.\nTechnologies: N-Tier Architecture, ASP.NET 9, Entity Framework Core, SQL Server, ASP.NET Identity, OAuth, Stripe\nAPI, Bootstrap\nQuizzly – Online Quiz Management System\ngithub.com/ahmedAlian7/Quizzly\nASP.NET Core MVC | Full-Stack | Team Lead\n---\n## Document No: 4 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTechnical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum\n---\n## Document No: 5 (Source: af669ff2_Ahmed.pdf)\n### Content:\n• Designed and implemented the end-to-end REST API flow for Problem Reports, secured with protected API-key\nauthentication and custom middleware.\n• Eliminated query bottlenecks and introduced LRU caching, measurably reducing database load and server response\ntimes.\n• Resolved critical deadlocks and race conditions in Go spatial APIs, ensuring reliability under high-concurrency pro-\nduction loads.\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: Is this candidate suitable for a backend role?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 7,
+    "query": "Does the applicant have leadership experience?",
+    "language": "en",
+    "difficulty": "medium",
+    "expected_source": "Python_Full-Stack_Developer.pdf",
+    "expected_chunk_summary": "Experience section mentions leading or managing teams",
+    "actual_retrieved_chunks": [
+      {
+        "text": "Requirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:",
+        "score": 0.8763490462518884,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "Dubizzle - Summer Internship Program 2026",
+        "score": 0.8723679175782597,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "This is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle",
+        "score": 0.8638658607616205,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "Team Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages",
+        "score": 0.8622887604303002,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8594070319558653,
+        "source": "af669ff2_Ahmed.pdf"
+      }
+    ],
+    "llm_answer": "Based on the provided documents, the applicant has team leadership experience. This is mentioned in Document No. 4 (Source: af669ff2_Ahmed.pdf) under the \"Team Leadership\" section.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: c76bcbeb_interndescription.txt)\n### Content:\nRequirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:\n---\n## Document No: 2 (Source: c76bcbeb_interndescription.txt)\n### Content:\nDubizzle - Summer Internship Program 2026\n---\n## Document No: 3 (Source: c76bcbeb_interndescription.txt)\n### Content:\nThis is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle\n---\n## Document No: 4 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTeam Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages\n---\n## Document No: 5 (Source: af669ff2_Ahmed.pdf)\n### Content:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: Does the applicant have leadership experience?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 8,
+    "query": "What soft skills does the candidate demonstrate?",
+    "language": "en",
+    "difficulty": "medium",
+    "expected_source": "Python_Full-Stack_Developer.pdf",
+    "expected_chunk_summary": "Communication and teamwork mentions in CV",
+    "actual_retrieved_chunks": [
+      {
+        "text": "Technical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum",
+        "score": 0.8820052717446786,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Team Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages",
+        "score": 0.8646706331571503,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "petitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)",
+        "score": 0.8645707211791385,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8618974238417354,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Dubizzle - Summer Internship Program 2026",
+        "score": 0.8580316456471053,
+        "source": "c76bcbeb_interndescription.txt"
+      }
+    ],
+    "llm_answer": "The candidate demonstrates the following soft skills:\n\n1. Team Leadership\n2. Problem-Solving\n3. Agile / Scrum",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTechnical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTeam Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\npetitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)\n---\n## Document No: 4 (Source: af669ff2_Ahmed.pdf)\n### Content:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n## Document No: 5 (Source: c76bcbeb_interndescription.txt)\n### Content:\nDubizzle - Summer Internship Program 2026\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: What soft skills does the candidate demonstrate?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 9,
+    "query": "How does the candidate's background align with the job requirements?",
+    "language": "en",
+    "difficulty": "medium",
+    "expected_source": "Python_Full-Stack_Developer.pdf + Software Engineer Job Description.txt",
+    "expected_chunk_summary": "Cross-document comparison of skills vs requirements",
+    "actual_retrieved_chunks": [
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8530087116011804,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Team Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages",
+        "score": 0.8391306772174951,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service",
+        "score": 0.8390967591273479,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Requirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:",
+        "score": 0.8680161214968862,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "This is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle",
+        "score": 0.857800861118313,
+        "source": "c76bcbeb_interndescription.txt"
+      }
+    ],
+    "llm_answer": "Based on the provided documents, the candidate's background aligns with the job requirements as follows:\n\n- The candidate is an undergraduate student in their 2nd, 3rd, or 4th year (Document No: 4), which matches the academic standing requirement.\n- The candidate is available for an intensive 4-week duration (Document No: 4), which aligns with the tenure and availability requirement.\n- The candidate is a resident of Egypt, specifically Cairo, and is able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt (Document No: 5), which meets the location and residency requirement.\n\nHowever, the candidate's background does not explicitly mention any prior experience in a fast-paced, innovative work environment, which is mentioned as a benefit in the job requirements (Document No: 5).",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTeam Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\n• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service\n---\n## Document No: 4 (Source: c76bcbeb_interndescription.txt)\n### Content:\nRequirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:\n---\n## Document No: 5 (Source: c76bcbeb_interndescription.txt)\n### Content:\nThis is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: How does the candidate's background align with the job requirements?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 10,
+    "query": "Has this person worked in an agile environment?",
+    "language": "en",
+    "difficulty": "medium",
+    "expected_source": "Python_Full-Stack_Developer.pdf",
+    "expected_chunk_summary": "Mentions agile or scrum methodology",
+    "actual_retrieved_chunks": [
+      {
+        "text": "Team Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages",
+        "score": 0.8889255853757935,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Technical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum",
+        "score": 0.8858898515785887,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service",
+        "score": 0.8823962626469185,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Ahmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features",
+        "score": 0.8815622051254453,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "This is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle",
+        "score": 0.8883587074511154,
+        "source": "c76bcbeb_interndescription.txt"
+      }
+    ],
+    "llm_answer": "Yes, based on Document No: 2, the person has listed \"Agile / Scrum\" as one of their Soft Skills.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTeam Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTechnical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\n• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service\n---\n## Document No: 4 (Source: af669ff2_Ahmed.pdf)\n### Content:\nAhmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features\n---\n## Document No: 5 (Source: c76bcbeb_interndescription.txt)\n### Content:\nThis is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: Has this person worked in an agile environment?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 11,
+    "query": "Who is more qualified for the role, candidate 1 or candidate 2?",
+    "language": "en",
+    "difficulty": "hard",
+    "expected_source": "Python_Full-Stack_Developer.pdf + Full-Stack_Developer.pdf + Software Engineer Job Description.txt",
+    "expected_chunk_summary": "Needs chunks from all three documents to compare",
+    "actual_retrieved_chunks": [
+      {
+        "text": "• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service",
+        "score": 0.8514778164962811,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "petitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)",
+        "score": 0.8474523191915224,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Team Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages",
+        "score": 0.8459065469973066,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Requirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:",
+        "score": 0.8528514095724584,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "This is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle",
+        "score": 0.8480985692839125,
+        "source": "c76bcbeb_interndescription.txt"
+      }
+    ],
+    "llm_answer": "I could not find this information in the provided documents.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\n• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\npetitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTeam Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages\n---\n## Document No: 4 (Source: c76bcbeb_interndescription.txt)\n### Content:\nRequirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:\n---\n## Document No: 5 (Source: c76bcbeb_interndescription.txt)\n### Content:\nThis is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: Who is more qualified for the role, candidate 1 or candidate 2?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 12,
+    "query": "What would disqualify an applicant based on the job requirements?",
+    "language": "en",
+    "difficulty": "hard",
+    "expected_source": "Software Engineer Job Description.txt",
+    "expected_chunk_summary": "Requirements section listing must-haves",
+    "actual_retrieved_chunks": [
+      {
+        "text": "Requirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:",
+        "score": 0.8680538097040371,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "This is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle",
+        "score": 0.8537536411490444,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "Dubizzle - Summer Internship Program 2026",
+        "score": 0.8416024308969476,
+        "source": "c76bcbeb_interndescription.txt"
+      },
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8422109179152162,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "petitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)",
+        "score": 0.840612220934428,
+        "source": "af669ff2_Ahmed.pdf"
+      }
+    ],
+    "llm_answer": "Based on the provided documents, the following would disqualify an applicant:\n\n1. Not being an undergraduate student in their 2nd, 3rd, or 4th year (Document No: 1).\n2. Not being able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt (Document No: 2).\n3. Not being available for the entire 4-week duration, starting precisely on the 1st of the assigned month (June, July, or August 2026) (Document No: 1).",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: c76bcbeb_interndescription.txt)\n### Content:\nRequirements\n\n Academic Standing:\n\n Applicants must be undergraduate students in their 2nd, 3rd, or 4th year.\nApplicants from all academic backgrounds are welcome to apply. \nTenure & Availability: \n\nBe fully available for an intensive 4-week duration, starting precisely on the 1st of your assigned month (June, July, or August 2026), and it may be extended based on business needs. \nLocation & Residency:\n---\n## Document No: 2 (Source: c76bcbeb_interndescription.txt)\n### Content:\nThis is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle\n---\n## Document No: 3 (Source: c76bcbeb_interndescription.txt)\n### Content:\nDubizzle - Summer Internship Program 2026\n---\n## Document No: 4 (Source: af669ff2_Ahmed.pdf)\n### Content:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n## Document No: 5 (Source: af669ff2_Ahmed.pdf)\n### Content:\npetitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: What would disqualify an applicant based on the job requirements?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 13,
+    "query": "What technical skills are missing from the candidate's profile?",
+    "language": "en",
+    "difficulty": "hard",
+    "expected_source": "Python_Full-Stack_Developer.pdf + Software Engineer Job Description.txt",
+    "expected_chunk_summary": "Gap analysis between CV skills and job requirements",
+    "actual_retrieved_chunks": [
+      {
+        "text": "Technical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum",
+        "score": 0.8845883324279928,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8712392085502443,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Team Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages",
+        "score": 0.8663879014451386,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service",
+        "score": 0.8637304106723201,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Ahmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features",
+        "score": 0.8601943566123383,
+        "source": "af669ff2_Ahmed.pdf"
+      }
+    ],
+    "llm_answer": "I could not find this information in the provided documents.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTechnical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTeam Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages\n---\n## Document No: 4 (Source: af669ff2_Ahmed.pdf)\n### Content:\n• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service\n---\n## Document No: 5 (Source: af669ff2_Ahmed.pdf)\n### Content:\nAhmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: What technical skills are missing from the candidate's profile?",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 14,
+    "query": "Summarise the strongest match between any CV and the job description.",
+    "language": "en",
+    "difficulty": "hard",
+    "expected_source": "Python_Full-Stack_Developer.pdf + Software Engineer Job Description.txt",
+    "expected_chunk_summary": "Overall match assessment across documents",
+    "actual_retrieved_chunks": [
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8535160642110562,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Team Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages",
+        "score": 0.8493935922581604,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Technical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum",
+        "score": 0.8460747386785877,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service",
+        "score": 0.841335863953815,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "As part of dubizzle, we are alongside some of the strongest classifieds brands in the market. With a collective strength of 8 brands, we have more than 160 million monthly users that trust in our dedication to providing them with the best platform for their needs.",
+        "score": 0.84112788505356,
+        "source": "c76bcbeb_interndescription.txt"
+      }
+    ],
+    "llm_answer": "Based on the provided documents, I could not find a job description to compare with the CV. However, I can suggest that Document No. 4 (Source: af669ff2_Ahmed.pdf) contains a project description that matches the skills and technologies mentioned in the CV. \n\nThe project description in Document No. 4 involves leading a team to deliver a scalable quiz platform using C#, ASP.NET Core 9, Entity Framework Core, SQL Server, and other technologies. This project showcases the candidate's technical skills and experience in team leadership, problem-solving, and agile/scrum practices.\n\nIf a job description were available, a stronger match could be determined.",
+    "full_prompt": "You are a precise and helpful document assistant.\nAnswer the user's question ONLY using the information provided in the documents below.\nIf the answer is not found in the documents, say: \"I could not find this information in the provided documents.\"\nDo not use your training knowledge — rely solely on the document context.\n\n## Document No: 1 (Source: af669ff2_Ahmed.pdf)\n### Content:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n## Document No: 2 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTeam Leadership, Problem-Solving, Agile / Scrum\nCertifications & Awards\nProgramming Advices – General Programming Foundation Roadmap\n2023 – 2025\n• Completed 24+ courses covering algorithms, data structures, OOP, C#, .NET, databases, and API development.\n3rd Place – .NET Summer Training 2025\n2025\nOpen Source Community, Ain Shams University\n• Recognised for outstanding work covering .NET Core, MVC architecture, and RESTful API design during the com-\npetitive summer programme.\nLanguages\n---\n## Document No: 3 (Source: af669ff2_Ahmed.pdf)\n### Content:\nTechnical Skills\nLanguages\nC++, C#, Java, Go (Golang), Python, Scala\nFrameworks\nASP.NET Core, .NET Framework, ADO.NET, Entity Framework Core, LINQ,\nWinForms, WPF\nDatabases\nSQL Server (T-SQL), Oracle SQL Developer, relational database design\nWeb\nRESTful APIs, ASP.NET MVC, HTML, CSS, JavaScript, Bootstrap, AJAX\nPractices\nOOP, SOLID Principles, Clean Architecture, MVC, Windows Services, Unit\nTesting\nVersion Control\nGit, GitHub\nSoft Skills\nTeam Leadership, Problem-Solving, Agile / Scrum\n---\n## Document No: 4 (Source: af669ff2_Ahmed.pdf)\n### Content:\n• Led a team of 3 to deliver a scalable quiz platform serving both students and instructors.\n• Integrated an AI-powered auto-grading API, reducing manual grading effort by 40%.\n• Enforced secure, role-based access control with Google OAuth for all user types.\nTechnologies: C#, ASP.NET Core 9, Entity Framework Core, SQL Server, ASP.NET Identity, Google OAuth, AI API\nIntegration, Bootstrap\nWindows Services: Database Backup & File Monitoring\ngithub.com/ahmedAlian7/database-backup-service\n---\n## Document No: 5 (Source: c76bcbeb_interndescription.txt)\n### Content:\nAs part of dubizzle, we are alongside some of the strongest classifieds brands in the market. With a collective strength of 8 brands, we have more than 160 million monthly users that trust in our dedication to providing them with the best platform for their needs.\n---\n\nBased ONLY on the documents above, answer the following question clearly and concisely.\nIf the documents do not contain sufficient information, explicitly state that.\n\nQuestion: Summarise the strongest match between any CV and the job description.",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  },
+  {
+    "query_id": 15,
+    "query": "ما هي المهارات التقنية التي يمتلكها المرشح؟",
+    "language": "ar",
+    "difficulty": "bonus",
+    "expected_source": "arabic_cv.txt",
+    "expected_chunk_summary": "المهارات التقنية section listing Python and JavaScript and SQL",
+    "actual_retrieved_chunks": [
+      {
+        "text": "petitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)",
+        "score": 0.9027378221091662,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Cairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n• Relevant Coursework: Object-Oriented Programming, Data Structures & Algorithms, Database Systems,\nOperating Systems, Computer Networks, Computer Architecture, Software Engineering\nExperience & Open Source\nOpen-Source Core Contributor – Maglev (OneBusAway)\nFeb 2026 – Present\nRemote | github.com/OneBusAway/maglev\n• Merged 40+ PRs focused on performance, reliability, observability, and feature development.",
+        "score": 0.8845925684072861,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "Ahmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features",
+        "score": 0.8841152488854473,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "that cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)",
+        "score": 0.8816643959801043,
+        "source": "af669ff2_Ahmed.pdf"
+      },
+      {
+        "text": "This is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle",
+        "score": 0.8831171994869678,
+        "source": "c76bcbeb_interndescription.txt"
+      }
+    ],
+    "llm_answer": "المهارات التقنية التي يمتلكها المرشح هي:\n\n- لغة برمجة C#\n- SQL Server\n- ASP.NET Core\n- SOLID principles\n- clean architecture\n- relational database design\n- Object-Oriented Programming\n- Data Structures & Algorithms\n- Database Systems\n- Operating Systems\n- Computer Networks\n- Computer Architecture\n- Software Engineering",
+    "full_prompt": "أنت مساعد وثائق دقيق ومفيد.\nأجب على سؤال المستخدم فقط باستخدام المعلومات الواردة في الوثائق أدناه.\nإذا لم تجد الإجابة في الوثائق، قل: \"لم أتمكن من العثور على هذه المعلومات في الوثائق المقدمة.\"\nلا تستخدم معرفتك التدريبية — اعتمد فقط على سياق الوثيقة.\n\n## وثيقة رقم: 1 (المصدر: af669ff2_Ahmed.pdf)\n### المحتوى:\npetitive summer programme.\nLanguages\nArabic: Native\n·\nEnglish: Intermediate (B2 – CEFR)\n---\n## وثيقة رقم: 2 (المصدر: af669ff2_Ahmed.pdf)\n### المحتوى:\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n• Relevant Coursework: Object-Oriented Programming, Data Structures & Algorithms, Database Systems,\nOperating Systems, Computer Networks, Computer Architecture, Software Engineering\nExperience & Open Source\nOpen-Source Core Contributor – Maglev (OneBusAway)\nFeb 2026 – Present\nRemote | github.com/OneBusAway/maglev\n• Merged 40+ PRs focused on performance, reliability, observability, and feature development.\n---\n## وثيقة رقم: 3 (المصدر: af669ff2_Ahmed.pdf)\n### المحتوى:\nAhmed Alian\nBack-End Developer\nahmedalian.dev@gmail.com · +20 103 368 5131 · Cairo, Egypt · linkedin.com/in/ahmedalian7 ·\ngithub.com/ahmedAlian7\nProfessional Summary\nBack-End Developer with 1+ years of experience building scalable RESTful APIs and full-stack applications using\nASP.NET Core, C#, and SQL Server. Proven record of leading development teams, integrating AI-powered features\n---\n## وثيقة رقم: 4 (المصدر: af669ff2_Ahmed.pdf)\n### المحتوى:\nthat cut manual workflows by 40%, and contributing production-grade code to open-source projects. Strong foundation\nin SOLID principles, clean architecture, and relational database design. Currently seeking a Back-End or Full-Stack\ninternship for Summer 2026.\nEducation\nBachelor of Computer Science and Information Systems\n2023 – 2027\nAin Shams University, Faculty of Information and Computer Science\nCairo, Egypt\n• CGPA: 3.7 / 4.0 (Excellent)\n---\n## وثيقة رقم: 5 (المصدر: c76bcbeb_interndescription.txt)\n### المحتوى:\nThis is an on-site role. Applicants must be able to commute daily to the Dubizzle Headquarters in New Cairo, Egypt. \n\nBenefits\n\nHands-on experience on real business projects\nExposure to a fast-paced, innovative work environment\nNew Competencies and exposure to strengthen your work profile \nCertificate upon completion \n#Egyptdubizzle\n---\n\nبناءً فقط على الوثائق أعلاه، أجب على السؤال التالي بوضوح وإيجاز.\nإذا كانت الوثائق لا تحتوي على معلومات كافية، صرّح بذلك صراحةً.\n\nQuestion: ما هي المهارات التقنية التي يمتلكها المرشح؟",
+    "retrieval_correct": null,
+    "answer_correct": null,
+    "failure_category": null
+  }
+]
