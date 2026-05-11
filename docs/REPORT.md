@@ -34,7 +34,7 @@ The backend exposes a RESTful API under the `/api/v1` prefix.
 - **Payload (JSON)**:
   ```json
   {
-    "project_id": "file_id_returned_from_upload",
+    "file_id": "file_id_returned_from_upload",
     "chunk_size": 500,
     "overlap": 50,
     "do_reset": 0

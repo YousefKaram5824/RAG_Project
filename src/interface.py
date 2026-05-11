@@ -116,7 +116,7 @@ with col2:
 
     if st.button("⚙️ Process"):
         body = {
-            "project_id": target_file, 
+            "file_id": target_file, 
             "chunk_size": c_size, 
             "overlap": over, 
             "do_reset": 1

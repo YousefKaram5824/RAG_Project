@@ -29,7 +29,7 @@ class RequestProcess(BaseModel):
     }
     """
 
-    project_id: str = Field(
+    file_id: str = Field(
         ...,
         description="The filename to process, e.g. 'lecture.pdf'"
     )
@@ -51,7 +51,7 @@ class RequestProcess(BaseModel):
         le=1,
         description="Set to 1 to delete existing chunks before processing"
     )
-    @field_validator("project_id")
+    @field_validator("file_id")
     @classmethod
     def validate_filename(cls, value:str):
         value = value.strip()

@@ -127,7 +127,7 @@ async def process_file(
     try:
         chunks = process_controller.process_files(
             project_id=project_id,
-            filename=request.project_id,   # filename from body
+            filename=request.file_id,   # filename from body
             chunk_size=request.chunk_size,
             overlap=request.overlap
         )
