@@ -5,7 +5,7 @@ The Mini-RAG project is a containerized Retrieval-Augmented Generation (RAG) bac
 
 ## System Architecture
 
-The architecture follows a clean MVC-inspired multi-tier design, fully containerized using Docker.
+The architecture follows a clean multi-tier design, containerized using Docker.
 
 ![System Architecture](RAG-SYS-ARCH.png)
 

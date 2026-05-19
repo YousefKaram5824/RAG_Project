@@ -1,33 +1,6 @@
-# =============================================================================
-# routes/schema/data.py — Request Body Schemas for Data Routes
-# =============================================================================
-# PURPOSE:
-#   Defines the expected JSON body shape for the /api/data/* endpoints.
-#   FastAPI validates incoming requests against these schemas automatically.
-#   If the client sends the wrong field types, FastAPI returns a 422 error.
-#
-# USED BY: routes/data.py
-#
-# TEAM NOTE (Pair B — Member 4):
-#   These are the public API contracts. If you change a field name,
-#   the Streamlit UI (interface.py) and the Tech Report must be updated too.
-# =============================================================================
-
 from pydantic import BaseModel, Field,field_validator
 
-
 class RequestProcess(BaseModel):
-    """
-    Request body for POST /api/data/process/{project_id}
-
-    Example JSON:
-    {
-        "project_id":   "resume.pdf",    ← filename to process inside the project folder
-        "chunk_size":   500,             ← characters per chunk
-        "overlap":      50,              ← characters of overlap between chunks
-        "do_reset":     0                ← 1 to delete existing chunks first
-    }
-    """
 
     file_id: str = Field(
         ...,

@@ -1,24 +1,3 @@
-
-
-# =============================================================================
-# docker-compose.yaml — Infrastructure Services
-# =============================================================================
-# PURPOSE:
-#   Spins up two external services that the RAG app depends on:
-#     1. MongoDB  — stores project metadata + raw text chunks
-#     2. Qdrant   — stores embedding vectors for semantic search
-#
-# HOW TO USE (from the /docker folder in PowerShell / CMD):
-#   docker-compose up -d          ← start both services in background
-#   docker-compose down           ← stop and remove containers
-#   docker-compose logs -f        ← stream live logs from both
-#
-# PORTS EXPOSED TO YOUR MACHINE:
-#   MongoDB → localhost:27007
-#   Qdrant  → localhost:6333  (REST API)
-#             localhost:6334  (gRPC – optional)
-# =============================================================================
-
 services:
   # backend
   rag_app:
@@ -41,16 +20,6 @@ services:
       timeout: 5s
       retries: 5
     
-  # ---------------------------------------------------------------------------
-  # SERVICE 1: MongoDB
-  # ---------------------------------------------------------------------------
-  # What it stores:
-  #   - "projects" collection: one document per project (project_id)
-  #   - "chunks"   collection: all text chunks produced by ProcessController
-  #
-  # Credentials come from the .env file in this same /docker folder.
-  # Data is persisted in the ./mongodb folder so it survives container restarts.
-  # ---------------------------------------------------------------------------
   mongodb:
     image: mongo:7.0
     container_name: rag_mongodb
@@ -69,17 +38,6 @@ services:
       timeout: 5s
       retries: 5
     
-
-  # ---------------------------------------------------------------------------
-  # SERVICE 2: Qdrant (Vector Database)
-  # ---------------------------------------------------------------------------
-  # What it stores:
-  #   - One collection per project: "collection_<project_id>"
-  #   - Each point = one chunk embedding (384-dim float vector) + text payload
-  #
-  # UI dashboard available at: http://localhost:6333/dashboard
-  # Storage is persisted in src/assets/db/qdrant_data on your disk.
-  # ---------------------------------------------------------------------------
   qdrant:
     image: qdrant/qdrant:latest
     container_name: rag_qdrant

@@ -1,23 +1,3 @@
-# =============================================================================
-# routes/data.py — Data Upload & Processing Endpoints
-# =============================================================================
-# PURPOSE:
-#   Two endpoints that form the first two steps of the RAG pipeline:
-#
-#   Step 1 — POST /api/data/upload/{dir_name}
-#     Validates and saves an uploaded document to disk,
-#     and creates a project record in MongoDB.
-#
-#   Step 2 — POST /api/data/process/{project_id}
-#     Loads the saved file, splits it into chunks,
-#     and batch-inserts the chunks into MongoDB.
-#
-# TEAM NOTE (Pair B — Member 4, routes wiring):
-#   This file wires together Pair A's controllers and models.
-#   DO NOT put business logic here — only call controllers and return responses.
-#   All validation, file loading, and chunking logic lives in the controllers.
-# =============================================================================
-
 import aiofiles
 import os
 import logging
@@ -65,7 +45,6 @@ async def upload_file(
             detail="Invalid File"
         )
 
-    # Create or get project in MongoDB
     project = await project_model.get_project_or_create_one(project_id=dir_name)
 
     project_dir_path = project_controller.get_project_path(project_id=dir_name)
