@@ -1,253 +1,385 @@
-# 🧠 RAG Project — Team Setup Guide (Windows + VS Code)
+<p align="center">
+  <h1 align="center">RAG</h1>
+  <p align="center">
+    A production-ready Retrieval-Augmented Generation system for intelligent document question-answering.
+  </p>
+</p>
 
-## ⚡ Quick Start (3 commands to get running)
+<p align="center">
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.11+"></a>
+  <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-0.110-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI"></a>
+  <a href="https://streamlit.io/"><img src="https://img.shields.io/badge/Streamlit-1.33+-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit"></a>
+  <a href="https://www.docker.com/"><img src="https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"></a>
+  <a href="https://qdrant.tech/"><img src="https://img.shields.io/badge/Qdrant-Vector_DB-DC382D?style=for-the-badge&logo=qdrant&logoColor=white" alt="Qdrant"></a>
+  <a href="https://www.mongodb.com/"><img src="https://img.shields.io/badge/MongoDB-7.0-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"></a>
+  <a href="#license"><img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License: MIT"></a>
+</p>
 
-```powershell
-# Terminal 1 — Start databases
-cd docker
-copy .env.example .env      # then open .env and verify credentials
-docker-compose up -d
-
-# Terminal 2 — Start FastAPI backend
-cd src
-copy .env.example .env      # then open .env and add your OPENAI_API_KEY
-pip install -r requirements.txt
-uvicorn main:app --reload --port 5000
-
-# Terminal 3 — Start Streamlit UI (optional)
-cd src
-streamlit run interface.py
-```
+<p align="center">
+  <a href="#description">Description</a> •
+  <a href="#features">Features</a> •
+  <a href="#system-architecture">Architecture</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#api-reference">API</a> •
+  <a href="#project-structure">Structure</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#license">License</a> •
+  <a href="#acknowledgments">Acknowledgments</a> 
+</p>
 
 ---
 
-## 📋 Step-by-Step Windows Setup
+## Description
 
-### Prerequisites — Install Once
+**RAG** is a containerized Retrieval-Augmented Generation (RAG) backend engineered for intelligent document question-answering. The system enables users to upload unstructured documents (PDF, TXT), automatically process and chunk them, generate vector embeddings, and query the corpus using natural language that can receive context-aware, large language model-generated answers grounded in the uploaded documents' content.
+
+Built as a project for the **Natural Language Processing** course at **FCIS-ASU**, RAG demonstrates a production-grade approach to combining information retrieval with large language model generation.
+
+The primary use-case showcased is **CV-to-Job-Description matching**: upload candidate resumes and job postings, then ask natural-language questions and receive precise, source-attributed answers.
+
+### Why RAG?
+
+Traditional keyword search fails when users ask conceptual questions across documents. RAG bridges that gap by:
+
+1. **Understanding intent**: Semantic embeddings capture meaning, not just keywords.
+2. **Grounding answers in evidence**: Every answer is synthesized from retrieved document chunks, reducing hallucination.
+
+---
+
+## Features
+
+| Category | Feature | Details |
+|----------|---------|---------|
+| **Document Ingestion** | Multi-format upload | PDF and plain-text files up to 10 MB |
+| **Chunking** | Recursive character splitting | Configurable `chunk_size` (default: 500) and `overlap` (default: 50) |
+| **Embedding** | Local vector generation | `BAAI/bge-small-en` (384-dim) via `sentence-transformers` no external API calls |
+| **Retrieval** | Semantic similarity search | Cosine similarity over Qdrant vector index with top-k retrieval |
+| **Generation** | LLM-powered answers | Groq API (`llama-3.1-8b-instant`) with prompt templates and chat history |
+| **Multilingual** | Arabic + English | Arabic text reshaping, BiDi reordering, and locale-aware prompt templates |
+| **Architecture** | Clean multi-tier design | Controller → Model → Store separation with Factory Pattern |
+| **Deployment** | Fully containerized | Single `docker-compose up` spins up FastAPI + MongoDB + Qdrant |
+| **UI** | Streamlit interface | Document upload, real-time processing feedback, and conversational Q&A |
+
+---
+
+## System Architecture
+
+The system follows a clean **multi-tier architecture** containerized with Docker Compose.
+
+<p align="center">
+  <img src="docs/RAG-SYS-ARCH.png" alt="RAG System Architecture" width="850">
+</p>
+
+### Component Breakdown
+
+| Layer | Component | Responsibility |
+|-------|-----------|----------------|
+| **Frontend** | Streamlit (`interface.py`) | User-friendly document upload and chat interface |
+| **Web Layer** | FastAPI (`routes/`) | RESTful API endpoints with Swagger documentation |
+| **Controller Layer** | `DataController`, `NlpController`, `ProcessController` | Business logic orchestration |
+| **Data Layer** | MongoDB 7.0 | Operational database for files, chunks, and project metadata |
+| **Vector Layer** | Qdrant | High-performance vector similarity search |
+| **Provider Layer** | LLM Factory, VectorDB Factory | Pluggable connectors via Factory + Strategy patterns |
+
+---
+
+## Tech Stack
+
+### Backend
+| Technology | Purpose | Version |
+|------------|---------|---------|
+| [Python](https://www.python.org/) | Core language | 3.11+ |
+| [FastAPI](https://fastapi.tiangolo.com/) | Async web framework & REST API | 0.110.2 |
+| [Uvicorn](https://www.uvicorn.org/) | ASGI server | 0.29.0 |
+| [Pydantic](https://docs.pydantic.dev/) | Data validation & settings management | v2 |
+| [Motor](https://motor.readthedocs.io/) | Async MongoDB driver | 3.4.0 |
+
+### AI / NLP
+| Technology | Purpose | Version |
+|------------|---------|---------|
+| [LangChain](https://python.langchain.com/) | Document loading & text splitting | 0.1.20 |
+| [Sentence-Transformers](https://www.sbert.net/) | Local embedding generation (`BAAI/bge-small-en`) | ≥ 2.6.0 |
+| [OpenAI SDK](https://github.com/openai/openai-python) | LLM client (Groq-compatible) | 1.35.15 |
+| [PyMuPDF](https://pymupdf.readthedocs.io/) | PDF text extraction | 1.24.3 |
+| [arabic-reshaper](https://github.com/mpcabd/python-arabic-reshaper) | Arabic text normalization | ≥ 3.0.0 |
+| [python-bidi](https://github.com/MichaelAqworthy/python-bidi) | Bidirectional text support | ≥ 0.4.2 |
+
+### Infrastructure
+| Technology | Purpose | Version |
+|------------|---------|---------|
+| [Docker](https://www.docker.com/) | Containerization | Latest |
+| [Docker Compose](https://docs.docker.com/compose/) | Multi-service orchestration | v2 |
+| [MongoDB](https://www.mongodb.com/) | Document store | 7.0 |
+| [Qdrant](https://qdrant.tech/) | Vector database | Latest |
+
+### Frontend
+| Technology | Purpose | Version |
+|------------|---------|---------|
+| [Streamlit](https://streamlit.io/) | Interactive web UI | ≥ 1.33.0 |
+
+---
+
+## Installation
+
+### Prerequisites
+
+Ensure the following tools are installed on your system:
 
 | Tool | Download | Verify |
 |------|----------|--------|
-| Docker Desktop | https://www.docker.com/products/docker-desktop | `docker --version` |
-| Python 3.11+ | https://www.python.org/downloads/ | `python --version` |
-| VS Code | https://code.visualstudio.com | — |
-| Git | https://git-scm.com/download/win | `git --version` |
+| Docker Desktop | [docker.com](https://www.docker.com/products/docker-desktop) | `docker --version` |
+| Python 3.11+ | [python.org](https://www.python.org/downloads/) | `python --version` |
+| Git | [git-scm.com](https://git-scm.com/download/win) | `git --version` |
 
-**VS Code extensions to install:**
-- Python (Microsoft)
-- Docker (Microsoft)
-- REST Client (Huachao Mao) — for testing API endpoints
+### Quick Start (3 Steps)
 
----
+```bash
+git clone https://github.com/AhmedAlian7/RAG.git
+cd RAG
 
-### Step 1: Clone and open the project
-
-```powershell
-git clone <your-repo-url> rag-project
-cd rag-project
-code .          # opens VS Code in the project folder
-```
-
----
-
-### Step 2: Start the databases with Docker
-
-```powershell
 cd docker
-copy .env.example .env
-```
-
-Open `docker/.env` in VS Code and verify:
-```
-MONGO_USER=admin
-MONGO_PASSWORD=admin123
-```
-
-Then start the containers:
-```powershell
+cp .env.example .env  
 docker-compose up -d
-```
 
-**Verify both containers are running:**
-```powershell
-docker ps
-```
-You should see `rag_mongodb` and `rag_qdrant`.
-
-**Verify Qdrant dashboard:**
-Open http://localhost:6333/dashboard in your browser.
-
-**Verify MongoDB:**
-```powershell
-docker exec -it rag_mongodb mongosh -u admin -p admin123
-```
-
----
-
-### Step 3: Set up the Python environment
-
-```powershell
-cd src
-python -m venv .venv
-.venv\Scripts\activate          # Windows PowerShell
+cd ../src
+cp .env.example .env
 pip install -r requirements.txt
-```
-
-Configure the app:
-```powershell
-copy .env.example .env
-```
-
-Open `src/.env` and fill in:
-- `GROQ_API_KEY` — your GROQ api key
-- Leave everything else as default for now
-
----
-
-### Step 4: Start the FastAPI backend
-
-```powershell
-cd src
 uvicorn main:app --reload --port 5000
 ```
 
-Open http://localhost:5000/docs — you should see the Swagger UI with all endpoints.
+
+### Docker Compose (Full Deployment)
+
+To deploy the entire stack (backend + databases) with a single command:
+
+```bash
+cd docker
+cp .env.example .env
+cp ../src/.env.example ../src/.env # set your api key
+docker-compose up -d --build
+```
+
+This starts:
+| Service | URL |
+|---------|-----|
+| FastAPI Backend | [http://localhost:5000](http://localhost:5000) |
+| Swagger API Docs | [http://localhost:5000/docs](http://localhost:5000/docs) |
+| Qdrant Dashboard | [http://localhost:6333/dashboard](http://localhost:6333/dashboard) |
+| MongoDB | `localhost:27007` |
 
 ---
 
-### Step 5: Start the Streamlit UI (optional)
+## Usage
 
-Open a second PowerShell terminal:
-```powershell
-cd src
-streamlit run interface.py
-```
+### Via the Streamlit UI
 
-Opens at http://localhost:8501
+1. **Open** the Streamlit app at [http://localhost:8501](http://localhost:8501).
+2. **Set a workspace name** in the sidebar (e.g., `my-resumes`).
+3. **Upload** one or more PDF/TXT documents in the **Upload** tab.
+4. **Wait** for the automated pipeline: Upload → Chunk → Embed → Index.
+5. **Switch** to the **Chat** tab and ask questions about your documents.
 
----
+### Via the REST API
 
-## 🗂️ Project Structure
+```bash
+# 1. Upload a document
+curl -X POST "http://localhost:5000/api/v1/data/upload/my-project" \
+  -F "file=@resume.pdf"
 
-```
-rag-project/
-├── docker/                     ← Docker config for MongoDB + Qdrant
-│   ├── docker-compose.yaml     ← Defines both DB services
-│   ├── .env                    ← DB credentials (git-ignored)
-│   └── .env.example            ← Template — copy and fill in
-│
-└── src/                        ← All Python source code
-    ├── main.py                 ★ START HERE — FastAPI app entry point
-    ├── interface.py            ★ Streamlit UI
-    ├── requirements.txt        ← Python packages
-    ├── .env                    ← App secrets (git-ignored)
-    ├── Dockerfile              ← Container for the FastAPI app
-    │
-    ├── helpers/
-    │   └── config.py           ← Reads .env into typed Settings class
-    │
-    ├── controllers/            ← Business logic (no DB queries here)
-    │   ├── BaseController.py   ← Parent: provides settings + file paths
-    │   ├── DataController.py   ← File validation (MIME, size)
-    │   ├── FileController.py   ← Directory management
-    │   ├── ProcessController.py← Document loading + chunking (20% grade)
-    │   └── NlpController.py    ← Core RAG logic (embed, search, answer)
-    │
-    ├── models/                 ← MongoDB CRUD (no business logic here)
-    │   ├── DataBaseModel.py    ← Parent: provides Motor async DB client
-    │   ├── ProjectModel.py     ← projects collection CRUD
-    │   ├── ChunkModel.py       ← chunks collection CRUD
-    │   └── db_schemes/         ← Pydantic schemas (data contracts)
-    │       ├── project.py      ← Project schema
-    │       └── data_chunk.py   ← DataChunk + RetrievalDocument schemas
-    │
-    ├── routes/                 ← FastAPI endpoint definitions
-    │   ├── base.py             ← GET /api/ (health check)
-    │   ├── data.py             ← POST /api/data/upload + /process
-    │   ├── nlp.py              ← POST /api/nlp/index/push, search, answer
-    │   └── schema/             ← Pydantic request body schemas
-    │       ├── data.py         ← RequestProcess
-    │       └── nlp.py          ← PushDataRequest, SearchRequest
-    │
-    └── stores/                 ← External service integrations
-        ├── llm/
-        │   ├── LLMInterface.py      ← Abstract contract (Strategy Pattern)
-        │   ├── LLMFactory.py        ← Creates providers (Factory Pattern ★ Bonus)
-        │   ├── provider/
-        │   │   ├── OpenAIProvider.py    ← Text generation via OpenAI API
-        │   │   └── EmbeddingProvider.py ← Local embeddings via sentence-transformers
-        │   └── template/
-        │       ├── template_parser.py   ← Loads + renders prompt templates
-        │       └── locales/
-        │           ├── en/rag.py    ← English prompts
-        │           └── ar/rag.py    ← Arabic prompts (★ Bonus)
-        └── vectordb/
-            ├── VectorDBInterface.py ← Abstract contract (Strategy Pattern)
-            ├── VectorDBFactory.py   ← Creates providers (Factory Pattern)
-            └── provider/
-                └── QDrantDB.py      ← All Qdrant operations
+# 2. Process and chunk the document
+curl -X POST "http://localhost:5000/api/v1/data/process/my-project" \
+  -H "Content-Type: application/json" \
+  -d '{"file_id": "<file_id>", "chunk_size": 500, "overlap": 50, "do_reset": 0}'
+
+# 3. Embed and push chunks to the vector index
+curl -X POST "http://localhost:5000/api/v1/nlp/index/push/my-project" \
+  -H "Content-Type: application/json" \
+  -d '{"do_reset": 1}'
+
+# 4. Ask a question (RAG pipeline)
+curl -X POST "http://localhost:5000/api/v1/nlp/index/answer/my-project" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "What programming languages does the candidate know?", "top_k": 5, "language": "en"}'
 ```
 
 ---
 
-## 🔗 API Endpoints
+## API Reference
 
-| Method | URL | Description |
-|--------|-----|-------------|
-| GET | `/api/` | Health check |
-| POST | `/api/data/upload/{project_name}` | Upload a document |
-| POST | `/api/data/process/{project_id}` | Chunk the document |
-| POST | `/api/nlp/index/push/{project_id}` | Embed + index chunks |
-| GET | `/api/nlp/index/info/{project_id}` | Check index status |
-| POST | `/api/nlp/index/search/{project_id}` | Semantic search |
-| POST | `/api/nlp/index/answer/{project_id}` | Full RAG answer |
+All endpoints are prefixed with `/api/v1`. Full interactive documentation is available at [`/docs`](http://localhost:5000/docs) when the server is running.
 
-Full interactive docs: http://localhost:5000/docs
+### Data Management
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/data/upload/{project_id}` | Upload a document (PDF/TXT) to a workspace |
+| `POST` | `/data/process/{project_id}` | Parse, preprocess, and chunk the uploaded document |
+
+### NLP & Retrieval
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/nlp/index/push/{project_id}` | Embed all chunks and push to Qdrant |
+| `GET`  | `/nlp/index/info/{project_id}` | Get index status and vector count |
+| `POST` | `/nlp/index/search/{project_id}` | Perform semantic similarity search |
+| `POST` | `/nlp/index/answer/{project_id}` | Execute the full RAG pipeline (retrieve + generate) |
+
+### Health
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET`  | `/health` | Application health check |
 
 ---
 
-## 🐛 Troubleshooting
+## Groq API Setup
 
-**Docker containers not starting:**
-```powershell
-docker-compose down
-docker-compose up -d --force-recreate
-```
-
-**Port 27007 already in use:**
-Change the port in `docker-compose.yaml` from `"27007:27017"` to `"27017:27017"` and update `MONGODB_URI` in `src/.env`.
-
-**`ModuleNotFoundError` when running uvicorn:**
-Make sure your virtual environment is activated:
-```powershell
-.venv\Scripts\activate
-```
-
-**Embedding model download is slow:**
-First run downloads BAAI/bge-small-en (~130MB). Subsequent runs use the cache at `~/.cache/huggingface/`.
-
-**Qdrant connection error:**
-Verify the container is running: `docker ps | findstr qdrant`
-
-
-## Setting up the Groq API (IMPORTANT !!)
-
-Each team member must generate their own API key for local development. Follow these steps to configure your environment:
-
-### Step 1: Generate Your Groq API Key
 1. Navigate to the [Groq Cloud Console](https://console.groq.com/keys).
-2. Create an account or log in using your existing credentials.
-3. On the left-hand navigation menu, select **API Keys**.
-4. Click the **Create API Key** button. 
-5. Give your key a recognizable name (e.g., `rag-project-dev`) and click **Submit**.
-6. **Copy the generated key immediately.** (It will begin with `gsk_`). For security reasons, Groq will not display this full key again once you close the window.
+2. Create an account or log in.
+3. Select **API Keys** from the navigation menu.
+4. Click **Create API Key**, name it (e.g., `rag-dev`), and click **Submit**.
+5. **Copy the key immediately** (starts with `gsk_`). It will not be shown again.
+6. Paste the key into your `src/.env` file:
 
-### Step 2: Configure Your `.env` File
-
-1. Locate the `.env` file in your `src/` directory (create one by copying `.env.example` if you haven't already).
-2. Paste your copied API key. Update your variables to match this block exactly:
 ```env
-GROQ_API_KEY="gsk_YOUR_COPIED_KEY_HERE"
-GROQ_API_BASE="[https://api.groq.com/openai/v1](https://api.groq.com/openai/v1)"
+GROQ_API_KEY="gsk_YOUR_KEY_HERE"
+GROQ_API_BASE="https://api.groq.com/openai/v1"
 GENERATE_RESPONSE_MODEL="llama-3.1-8b-instant"
 ALT_GENERATE_RESPONSE_MODEL="llama3-70b-8192"
 ```
+
+---
+
+## Project Structure
+
+```
+RAG/
+├── README.md
+├── .gitignore
+├── docker/                         
+│   ├── docker-compose.yaml               
+│   ├── .env.example                      
+│   └── mongodb/                        
+│
+├── docs/                            
+│   ├── RAG-SYS-ARCH.png                  
+│   └── REPORT.md                         
+│
+└── src/                               
+    ├── main.py                           
+    ├── interface.py                      
+    ├── Dockerfile                        
+    ├── requirements.txt                  
+    ├── .env.example                      
+    │
+    ├── helpers/
+    │   └── config.py                     
+    │
+    ├── controllers/                   
+    │   ├── BaseController.py             
+    │   ├── DataController.py             
+    │   ├── FileController.py             
+    │   ├── ProcessController.py          
+    │   ├── NlpController.py              
+    │   └── ProjectController.py          
+    │
+    ├── models/                        
+    │   ├── DataBaseModel.py              
+    │   ├── ProjectModel.py               
+    │   ├── ChunkModel.py                 
+    │   ├── enums/                        
+    │   └── db_schemes/                   
+    │       ├── project.py                
+    │       └── data_chunk.py             
+    │
+    ├── routes/                        
+    │   ├── base.py                       
+    │   ├── data.py                       
+    │   ├── nlp.py                        
+    │   └── schema/                       
+    │       ├── data.py                   
+    │       └── nlp.py                    
+    │
+    ├── stores/                        
+    │   ├── llm/
+    │   │   ├── LLMInterface.py           
+    │   │   ├── LLMFactory.py             
+    │   │   ├── provider/
+    │   │   │   ├── OpenAIProvider.py      
+    │   │   │   └── EmbeddingProvider.py   
+    │   │   └── template/
+    │   │       ├── template_parser.py    
+    │   │       └── locales/
+    │   │           ├── en/rag.py         
+    │   │           └── ar/rag.py         
+    │   └── vectordb/
+    │       ├── VectorDBInterface.py       
+    │       ├── VectorDBFactory.py         
+    │       └── provider/
+    │           └── QDrantDB.py            
+    │
+    └── evaluation/                    
+        ├── results.json                  
+        └── failure_analysis.md           
+```
+
+---
+
+## Contributing
+
+Contributions are welcome! Please follow these guidelines:
+
+1. **Fork** the repository.
+2. **Create** a feature branch:
+   ```bash
+   git checkout -b feat/your-feature-name
+   ```
+3. **Commit** your changes with clear, descriptive messages:
+   ```bash
+   git commit -m "feat: add MMR diversity re-ranking to retrieval pipeline"
+   ```
+4. **Push** to your fork:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. **Open** a Pull Request against the `main` branch.
+
+### Code Standards
+
+- Follow [PEP 8](https://peps.python.org/pep-0008/) style guidelines.
+- Use type hints for function signatures.
+- Maintain the existing Controller → Model → Store architecture.
+- Add docstrings to public classes and methods.
+
+---
+
+## License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgments
+
+This project was developed as part of the **Natural Language Processing (NLP)** course at the **Faculty of Computer and Information Sciences, Ain Shams University (FCIS-ASU)**.
+
+Special thanks to:
+
+- **FCIS-ASU NLP Course Staff**: For the course curriculum, project guidance, and technical mentorship throughout the development of this system.
+- **Teaching Assistants**: For their hands-on support, code reviews, and constructive feedback that significantly improved the quality of this project.
+
+---
+
+<p align="center">
+  <strong>Connect with me</strong>
+</p>
+
+<p align="center">
+  <a href="https://www.linkedin.com/in/ahmedalian7/"><img src="https://img.shields.io/badge/LinkedIn-Ahmed_Alian-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+</p>
+
+<p align="center">
+  <sub>⭐ If this project helped you, consider giving it a star!</sub>
+</p>
